@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('descuentos', function (Blueprint $table) {
+        Schema::create('diarias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->double('porcentaje');
-            $table->boolean('activo')->default(true);
-            $table->unsignedBigInteger('cooperativa_id');
-            $table->foreign('cooperativa_id')->references('id')->on('cooperativas');
+            $table->decimal('plata', 10, 2)->nullable()->default(1.1);
+            $table->decimal('plomo', 10, 2)->nullable()->default(1.1);
+            $table->decimal('zinc', 10, 2)->nullable()->default(1.1);
+            $table->decimal('estano', 10, 2)->nullable()->default(1.1);
+            $table->date('fecha');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('descuentos');
+        Schema::dropIfExists('diarias');
     }
 };

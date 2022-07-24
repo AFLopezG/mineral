@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Descuento extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'nombre',
+        'porcentaje',
+        'activo',
+        'cooperativa_id'
+     ];
+     protected $hidden = ["created_at", "updated_at"];
+
+     public function cooperativa(){
+         return $this->belongsTo(Cooperativa::class);
+     }
+     
 }

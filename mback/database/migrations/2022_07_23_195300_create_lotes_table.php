@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
+            $table->double('pesobruto');
+            $table->integer('saco');
+            $table->double('tara');
+            $table->double('pesohumedo');
+            $table->date('fecha');
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->timestamps();
         });
     }

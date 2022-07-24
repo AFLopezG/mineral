@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('ci')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('celular')->nullable();
+            $table->boolean('activo')->default(true);
+            $table->unsignedBigInteger('cooperativa_id');
+            $table->foreign('cooperativa_id')->references('id')->on('cooperativas');
             $table->timestamps();
         });
     }

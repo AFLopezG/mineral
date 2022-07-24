@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('cooperativas', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('direccion');
+            $table->string('representante');
+            $table->string('nim');
+            $table->string('nit');
+            $table->string('celular')->nullable();
             $table->timestamps();
         });
     }
