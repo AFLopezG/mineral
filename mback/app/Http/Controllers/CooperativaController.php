@@ -16,6 +16,7 @@ class CooperativaController extends Controller
     public function index()
     {
         //
+        return Cooperativa::all();
     }
 
     /**
@@ -37,6 +38,19 @@ class CooperativaController extends Controller
     public function store(StoreCooperativaRequest $request)
     {
         //
+        $cooperativa= new Cooperativa();
+        $cooperativa->nombre=strtoupper($request->nombre);
+        $cooperativa->direccion=strtoupper($request->direccion);
+        $cooperativa->representante=strtoupper($request->representante);
+        $cooperativa->nim=$request->nim;
+        $cooperativa->nit=$request->nit;
+        $cooperativa->celular=$request->celular;
+        $cooperativa->save();
+    }
+
+    public function validar(Request $request ){
+        return Cooperativa::where('nit',$request->nit)->count();
+
     }
 
     /**

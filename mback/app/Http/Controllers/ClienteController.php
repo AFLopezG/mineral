@@ -16,7 +16,7 @@ class ClienteController extends Controller
     public function index()
     {
         //
-        return Cliente::all();
+        return Cliente::with('cooperativa')->get();
     }
 
     /**
@@ -100,5 +100,6 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         //
+        $cliente->delete();
     }
 }

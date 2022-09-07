@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-Route::group(['middleware'=>'auth:sanctum'],function (){
+//Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::resource('/cliente',\App\Http\Controllers\ClienteController::class);
     Route::resource('/cooperativa',\App\Http\Controllers\CooperativaController::class);
     Route::resource('/descuento',\App\Http\Controllers\DescuentoController::class);
@@ -26,5 +26,6 @@ Route::group(['middleware'=>'auth:sanctum'],function (){
     Route::resource('/lote',\App\Http\Controllers\LoteController::class);
     Route::resource('/quincena',\App\Http\Controllers\QuincenaController::class);
     Route::resource('/user',\App\Http\Controllers\UserController::class);
+    Route::post('/validar',[\App\Http\Controllers\CooperativaController::class,'validar']);
 
-});
+//});
