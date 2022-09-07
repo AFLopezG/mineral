@@ -13,7 +13,7 @@ class Cliente extends Model
         'ci',
         'telefono',
         'celular',
-       'activo',
+        'activo',
         'cooperativa_id'
      ];
      protected $hidden = ["created_at", "updated_at"];

@@ -16,6 +16,7 @@ class ClienteController extends Controller
     public function index()
     {
         //
+        return Cliente::all();
     }
 
     /**
@@ -37,6 +38,15 @@ class ClienteController extends Controller
     public function store(StoreClienteRequest $request)
     {
         //
+        $cliente= new Cliente;
+        $cliente->nombre=$request->nombre;
+        $cliente->ci=$request->ci;
+        $cliente->telefono=$request->telefono;
+        $cliente->celular=$request->celular;
+        $cliente->activo=$request->activo;
+        $cliente->cooperativa_id=$request->cooperativa_id;
+        $cliente->save();
+
     }
 
     /**
@@ -71,6 +81,14 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         //
+        $cliente=Cliente::find($request->id);
+        $cliente->nombre=$request->nombre;
+        $cliente->ci=$request->ci;
+        $cliente->telefono=$request->telefono;
+        $cliente->celular=$request->celular;
+        $cliente->activo=$request->activo;
+        $cliente->cooperativa_id=$request->cooperativa_id;
+        $cliente->save();
     }
 
     /**
