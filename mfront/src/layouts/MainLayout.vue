@@ -24,18 +24,12 @@
       show-if-above
       bordered
     >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+    <q-list bordered class="rounded-borders">
+      <q-item-label header class="text-center q-pa-none q-ma-none" style="background: blue">
+        <!--<q-img src="logo.png" width="150px" />-->
+      </q-item-label>
+      <q-expansion-item dense exact expand-separator icon="home" label="Principal" default-opened to="/" expand-icon="null"/>
+      <q-expansion-item dense exact expand-separator icon="business" label="Cooperativas" to="cooperativas" expand-icon="null"/>
       </q-list>
     </q-drawer>
 
@@ -46,71 +40,29 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-export default defineComponent({
+export default {
   name: 'MainLayout',
-
-  components: {
-    EssentialLink
+  data() {
+      return {
+        leftDrawerOpen: false,
+        //store:globalStore()
+      }
+    },
+    created() {
+     // this.eventSearch()
   },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
+  methods: {
+/*       eventSearch(){
+        this.$api.post('eventSearch').then(res=>{
+          // console.log(res.data)
+          this.store.eventNumber=res.data
+        })
+      }, */
+      toggleLeftDrawer() {
+        this.leftDrawerOpen = !this.leftDrawerOpen
       }
     }
-  }
-})
+
+}
 </script>

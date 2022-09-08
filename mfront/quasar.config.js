@@ -76,6 +76,11 @@ module.exports = configure(function (ctx) {
       chainWebpack (chain) {
         chain.plugin('eslint-webpack-plugin')
           .use(ESLintPlugin, [{ extensions: [ 'js', 'vue' ] }])
+      },
+      env: {
+        API: ctx.dev
+          ? 'http://localhost:8000/api/'
+          : 'https://back.miganancia.cf/api/'
       }
       
     },
@@ -104,7 +109,12 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Dialog',
+        'Notify',
+        'Loading',
+        'LoadingBar'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

@@ -1,6 +1,6 @@
 <template>
-<q-page padding>
-<div class="row">
+<q-page >
+<div class="col-12">
   <q-table
       title="COOPERATIVAS"
       :rows="cooperativas"
@@ -20,6 +20,7 @@
 
 <script>
 export default {
+  name: `Cooperativas`,
   data() {
     return {
       cooperativas:[],
@@ -33,12 +34,14 @@ export default {
       ]
     }
   },
-  created:{
-
+  created(){
+    this.listCoop();
   },
-  method:{
+  methods:{
     listCoop(){
-      'cooperativa'
+      this.$api.get('cooperativa').then(res => {
+        this.cooperativas=res.data
+      })
     }
   }
 

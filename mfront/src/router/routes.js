@@ -1,10 +1,13 @@
+import IndexPage from "pages/IndexPage";
+import Cooperativas from "pages/Cooperativas";
 
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      { path: '', component: IndexPage },
+      { path: 'cooperativas', component: Cooperativas },
     ]
   },
 
