@@ -50,7 +50,7 @@ class CooperativaController extends Controller
 
     public function validar(Request $request ){
         return Cooperativa::where('nit',$request->nit)->count();
-
+        //DB::SELECT("Select  ");
     }
 
     /**

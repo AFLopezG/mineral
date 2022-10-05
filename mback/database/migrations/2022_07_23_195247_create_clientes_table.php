@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('ci')->nullable();
             $table->string('telefono')->nullable();
             $table->string('celular')->nullable();
-            $table->boolean('activo')->default(true);
-            $table->unsignedBigInteger('cooperativa_id');
-            $table->foreign('cooperativa_id')->references('id')->on('cooperativas');
+            //$table->boolean('activo')->default(true);
+            //$table->unsignedBigInteger('cooperativa_id');
+            //$table->foreign('cooperativa_id')->references('id')->on('cooperativas');
             $table->timestamps();
         });
     }

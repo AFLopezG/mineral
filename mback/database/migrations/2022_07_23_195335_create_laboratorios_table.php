@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('laboratorios', function (Blueprint $table) {
             $table->id();
-            $table->double('plata')->nullable();
-            $table->double('plomo')->nullable();
-            $table->double('zinc')->nullable();
-            $table->double('estano')->nullable();
-            $table->double('agua')->nullable();
+            $table->string('codigo');
+            $table->string('nombre');
+            $table->double('plata')->nullable()->default(0);
+            $table->double('plomo')->nullable()->default(0);
+            $table->double('zinc')->nullable()->default(0);
+            $table->double('estano')->nullable()->default(0);
+            $table->double('agua')->nullable()->default(0);
 
             $table->double('clplata')->nullable();
             $table->double('clplomo')->nullable();

@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('descuentos', function (Blueprint $table) {
+        Schema::create('anticipos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->double('porcentaje')->default(0);
-            $table->double('fijo')->default(0);
-            $table->boolean('activo')->default(true);
-            $table->unsignedBigInteger('cooperativa_id');
-            $table->foreign('cooperativa_id')->references('id')->on('cooperativas');
+            $table->double('monto')->default(0);
+            $table->date('fecha');
+            $table->string('tipo');
+            $table->unsignedBigInteger('lote_id');
+            $table->foreign('lote_id')->references('id')->on('lotes');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('descuentos');
+        Schema::dropIfExists('anticipos');
     }
 };

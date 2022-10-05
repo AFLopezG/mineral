@@ -23,6 +23,10 @@ return new class extends Migration
             $table->decimal('alplomo', 10, 3)->nullable()->default(3.000);
             $table->decimal('alzinc', 10, 3)->nullable()->default(3.000);
             $table->decimal('alestano', 10, 3)->nullable()->default(3.000);
+            $table->decimal('explata', 10, 3)->nullable()->default(3.600);
+            $table->decimal('explomo', 10, 3)->nullable()->default(3.000);
+            $table->decimal('exzinc', 10, 3)->nullable()->default(3.000);
+            $table->decimal('exestano', 10, 3)->nullable()->default(3.000);
             $table->date('fecha');
             $table->timestamps();
         });
