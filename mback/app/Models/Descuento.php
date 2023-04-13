@@ -11,6 +11,7 @@ class Descuento extends Model
     protected $fillable=[
         'nombre',
         'porcentaje',
+        'fijo',
         'activo',
         'cooperativa_id'
      ];

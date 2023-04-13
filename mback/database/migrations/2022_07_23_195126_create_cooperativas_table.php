@@ -21,7 +21,13 @@ return new class extends Migration
             $table->string('nim');
             $table->string('nit');
             $table->string('celular')->nullable();
+            $table->string('estado');
+
+            //$table->string('cliente')->nullable();
+            //$table->unsignedBigInteger('cliente_id');
+            //$table->foreign('cliente_id')->references('id')->on('clientes');
             $table->timestamps();
+           // $table->foreign('cooperativa_id')->references('id')->on('cooperativas')->onDelete('cascade');
         });
     }
 

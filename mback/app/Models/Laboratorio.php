@@ -14,6 +14,7 @@ class Laboratorio extends Model
         'zinc',
         'estano',
         'agua',
+        
     
         'clplata',
         'clplomo',

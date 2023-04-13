@@ -18,14 +18,15 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 //Route::group(['middleware'=>'auth:sanctum'],function (){
-    Route::resource('/cliente',\App\Http\Controllers\ClienteController::class);
-    Route::resource('/cooperativa',\App\Http\Controllers\CooperativaController::class);
-    Route::resource('/descuento',\App\Http\Controllers\DescuentoController::class);
+    //Route::apiResource('/cliente',\App\Http\Controllers\ClienteController::class);
+    Route::apiResource('/cooperativa', \App\Http\Controllers\CooperativaController::class);
+    Route::apiResource('/cliente', \App\Http\Controllers\ClienteController::class);
+    /*  Route::resource('/descuento',\App\Http\Controllers\DescuentoController::class);
     Route::resource('/diaria',\App\Http\Controllers\DiariaController::class);
     Route::resource('/laboratorio',\App\Http\Controllers\LaboratorioController::class);
     Route::resource('/lote',\App\Http\Controllers\LoteController::class);
     Route::resource('/quincena',\App\Http\Controllers\QuincenaController::class);
     Route::resource('/user',\App\Http\Controllers\UserController::class);
     Route::post('/validar',[\App\Http\Controllers\CooperativaController::class,'validar']);
-
+*/
 //});

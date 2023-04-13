@@ -15,7 +15,17 @@ class Cooperativa extends Model
        'nim',
        'nit',
        'celular',
+       'estado'
+       //'fecha'
+       //'cliente',
+       //'cliente_id',
     ];
-    protected $hidden = ["created_at", "updated_at"];
-
+    //protected $hidden = ["created_at", "updated_at"];
+   
+    public function cliente(){
+        return $this->hasMany(Cliente::class);
+    }
+    public function descuento(){
+        return $this->hasMany(Descuento::class);
+    }
 }

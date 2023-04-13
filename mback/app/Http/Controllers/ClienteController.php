@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Models\Cliente;
-use App\Http\Requests\StoreClienteRequest;
-use App\Http\Requests\UpdateClienteRequest;
+use App\Http\Requests;
+//use App\Http\Requests\UpdateClienteRequest;
 
 class ClienteController extends Controller
 {
@@ -35,17 +35,13 @@ class ClienteController extends Controller
      * @param  \App\Http\Requests\StoreClienteRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreClienteRequest $request)
+    public function store(Request $request)
     {
+        $cliente=Cliente::create($request->all());
+        return response()->json($cliente, status:200);
+        
         //
-        $cliente= new Cliente;
-        $cliente->nombre=$request->nombre;
-        $cliente->ci=$request->ci;
-        $cliente->telefono=$request->telefono;
-        $cliente->celular=$request->celular;
-        $cliente->activo=$request->activo;
-        $cliente->cooperativa_id=$request->cooperativa_id;
-        $cliente->save();
+        
 
     }
 
@@ -81,14 +77,9 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         //
-        $cliente=Cliente::find($request->id);
-        $cliente->nombre=$request->nombre;
-        $cliente->ci=$request->ci;
-        $cliente->telefono=$request->telefono;
-        $cliente->celular=$request->celular;
-        $cliente->activo=$request->activo;
-        $cliente->cooperativa_id=$request->cooperativa_id;
-        $cliente->save();
+        
+        return response()->json($cliente, status:200);
+
     }
 
     /**

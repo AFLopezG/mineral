@@ -28,6 +28,7 @@ module.exports = configure(function (ctx) {
     boot: [
       
       'axios',
+      
     ],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
@@ -80,7 +81,7 @@ module.exports = configure(function (ctx) {
       env: {
         API: ctx.dev
           ? 'http://localhost:8000/api/'
-          : 'https://back.miganancia.cf/api/'
+          : 'https://mback/api/'
       }
       
     },

@@ -1,68 +1,138 @@
+
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+  <q-layout view="lHh Lpr lff" >
+      <q-header elevated class="bg-cyan-8">
+        <q-toolbar>
+          <q-toolbar-title>EMPRESA MINERA LA CORDILLERA DEL SUR</q-toolbar-title>
+          <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
+        </q-toolbar>
+      </q-header>
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+      <q-drawer
+        v-model="drawer"
+        show-if-above
+        :width="200"
+        :breakpoint="400"
+      >
+        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+          <q-list padding>
+            <q-item clickable v-ripple to="/" exact >
+              <q-item-section avatar>
+                <q-icon name="inbox" />
+              </q-item-section>
 
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
+              <q-item-section>
+                Inicio
+              </q-item-section>
+            </q-item>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-    <q-list bordered class="rounded-borders">
-      <q-item-label header class="text-center q-pa-none q-ma-none" style="background: blue">
-        <!--<q-img src="logo.png" width="150px" />-->
-      </q-item-label>
-      <q-expansion-item dense exact expand-separator icon="home" label="Principal" default-opened to="/" expand-icon="null"/>
-      <q-expansion-item dense exact expand-separator icon="business" label="Cooperativas" to="cooperativas" expand-icon="null"/>
-      </q-list>
-    </q-drawer>
+            <q-item clickable v-ripple to="/Cooperativa" exact >
+              <q-item-section avatar>
+                <q-icon name="star" />
+              </q-item-section>
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+              <q-item-section>
+                Cooperativas
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/Cliente" exact>
+              <q-item-section avatar>
+                <q-icon name="people" />
+              </q-item-section>
+
+              <q-item-section>
+                Clientes
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="">
+              <q-item-section avatar>
+                <q-icon name="book" />
+              </q-item-section>
+
+              <q-item-section>
+                Lotes
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="">
+              <q-item-section avatar>
+                <q-icon name="send" />
+              </q-item-section>
+
+              <q-item-section>
+                Leyes
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="">
+              <q-item-section avatar>
+                <q-icon name="money" />
+              </q-item-section>
+
+              <q-item-section>
+                Anticipos
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="">
+              <q-item-section avatar>
+                <q-icon name="unlook" />
+              </q-item-section>
+
+              <q-item-section>
+                Liquidacion
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="">
+              <q-item-section avatar>
+                <q-icon name="local_printshop" />
+              </q-item-section>
+
+              <q-item-section>
+                Reporte
+              </q-item-section>
+            </q-item>
+
+          </q-list>
+        </q-scroll-area>
+
+        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+          <div class="absolute-bottom bg-transparent">
+            <q-avatar size="56px" class="q-mb-sm">
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            </q-avatar>
+            <div class="text-weight-bold">Razvan Stoenescu</div>
+            <div>@rstoenescu</div>
+          </div>
+        </q-img>
+      </q-drawer>
+
+      <q-page-container>
+        <router-view></router-view>
+      </q-page-container>
+    </q-layout>
 </template>
 
 <script>
+import { ref } from 'vue'
 
 export default {
-  name: 'MainLayout',
-  data() {
-      return {
-        leftDrawerOpen: false,
-        //store:globalStore()
-      }
-    },
-    created() {
-     // this.eventSearch()
-  },
-  methods: {
-/*       eventSearch(){
-        this.$api.post('eventSearch').then(res=>{
-          // console.log(res.data)
-          this.store.eventNumber=res.data
-        })
-      }, */
-      toggleLeftDrawer() {
-        this.leftDrawerOpen = !this.leftDrawerOpen
-      }
-    }
+  setup () {
+    const drawer = ref(false)
 
+    return {
+      drawer
+    }
+  }
 }
 </script>
+
+<style lang="scss">
+.my-menu-link {
+  color: white;
+  background: #F2C037;
+}
+</style>

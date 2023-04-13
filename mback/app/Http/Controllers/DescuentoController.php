@@ -15,7 +15,7 @@ class DescuentoController extends Controller
      */
     public function index()
     {
-        //
+        return Descuento::with('cooperativa')->get();
     }
 
     /**
@@ -34,9 +34,11 @@ class DescuentoController extends Controller
      * @param  \App\Http\Requests\StoreDescuentoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDescuentoRequest $request)
+    public function store(Request $request)
     {
-        //
+        $descuento=Descuento::create($request->all());
+        return response()->json($descuento, status:200);
+        
     }
 
     /**
@@ -68,9 +70,9 @@ class DescuentoController extends Controller
      * @param  \App\Models\Descuento  $descuento
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDescuentoRequest $request, Descuento $descuento)
+    public function update(Request $request, Descuento $descuento)
     {
-        //
+        return response()->json($descuento, status:200);
     }
 
     /**
@@ -81,6 +83,6 @@ class DescuentoController extends Controller
      */
     public function destroy(Descuento $descuento)
     {
-        //
+        $cliente->delete();
     }
 }

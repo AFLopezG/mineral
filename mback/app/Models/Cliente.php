@@ -9,16 +9,19 @@ class Cliente extends Model
 {
     use HasFactory;
     protected $fillable=[
+                 
         'nombre',
         'ci',
         'telefono',
         'celular',
         'activo',
-        'cooperativa_id'
+        'fecha',
+        'cooperativa',
+        'cooperativa_id',
      ];
-     protected $hidden = ["created_at", "updated_at"];
+   //protected $hidden = ["created_at", "updated_at"];
 
-     public function cooperativa(){
-         return $this->belongsTo(Cooperativa::class);
-     }
+    public function cooperativa(){
+      return $this->belongsTo(Cooperativa::class);
+    }
 }
