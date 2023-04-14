@@ -93,7 +93,7 @@
     name: 'IndexPage',
     data () {
               return{
-                estados:['Activo', 'Pasivo'],
+                estados:['ACTIVO', 'PASIVO'],
                 cooperativaFilter:'',
                 cooperativaDialog:false,
                 cooperativa:[],

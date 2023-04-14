@@ -34,7 +34,7 @@ class CooperativaController extends Controller
     public function activar($id){
         $cooperativa=Cooperativa::find($id);
         if($cooperativa->estado=='ACTIVO')
-            $cooperativa->estado='INACTIVO';
+            $cooperativa->estado='PASIVO';
         else
             $cooperativa->estado='ACTIVO';
         $cooperativa->save();
