@@ -30,6 +30,16 @@ class CooperativaController extends Controller
         $cooperativa->update($request->all());
         return response()->json($cooperativa, status:200);
     }
+
+    public function activar($id){
+        $cooperativa=Cooperativa::find($id);
+        if($cooperativa->estado=='ACTIVO')
+            $cooperativa->estado='INACTIVO';
+        else
+            $cooperativa->estado='ACTIVO';
+        $cooperativa->save();
+    }
+
     public function destroy(Cooperativa $cooperativa)
     {
         $cooperativa->delete();

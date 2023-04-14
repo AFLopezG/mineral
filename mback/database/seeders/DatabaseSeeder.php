@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call([
-            Agprecio::class,]);
+        //$this->call([
+       //     Agprecio::class,]);
     }
 }

@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
     //Route::apiResource('/cliente',\App\Http\Controllers\ClienteController::class);
     Route::apiResource('/cooperativa', \App\Http\Controllers\CooperativaController::class);
     Route::apiResource('/cliente', \App\Http\Controllers\ClienteController::class);
+    Route::post('/activar/{id}', [\App\Http\Controllers\CooperativaController::class,'activar']);
+    
     /*  Route::resource('/descuento',\App\Http\Controllers\DescuentoController::class);
     Route::resource('/diaria',\App\Http\Controllers\DiariaController::class);
     Route::resource('/laboratorio',\App\Http\Controllers\LaboratorioController::class);

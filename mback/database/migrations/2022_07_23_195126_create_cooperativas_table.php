@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nim');
             $table->string('nit');
             $table->string('celular')->nullable();
-            $table->string('estado');
+            $table->string('estado')->default('ACTIVO');
 
             //$table->string('cliente')->nullable();
             //$table->unsignedBigInteger('cliente_id');

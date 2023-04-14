@@ -16,9 +16,9 @@
   </template>
   <template v-slot:body-cell-opcion="props">
     <q-td :props="props">
-      <q-btn @click="cooperativaEdit (props.row)" color="yellow" icon="edit"></q-btn>
-      <q-btn @click="cooperativaDelete (props.row)" color="red" icon="delete"></q-btn>
-      <q-btn @click="cooperativaDesc (props.row)" color="blue" icon="des"></q-btn>
+      <q-btn dense @click="cooperativaEdit (props.row)" color="yellow" icon="edit"></q-btn>
+      <q-btn dense @click="cooperativaDelete (props.row)" color="red" icon="delete"></q-btn>
+      <q-btn dense @click="cooperativaDesc (props.row)" color="blue" icon="rule"></q-btn>
     </q-td>
 
   </template>
@@ -45,16 +45,11 @@
   </q-card>
   
 </q-dialog>
-  </q-page>
-  <q-page>
-  <pre>{{ cooperativa }}</pre>
   
-</q-page>
   
 
-<h5>Cooperativa</h5>
     
-    <div class="q-pa-md">
+    <div class="q-pa-md" hidden >
     <q-markup-table>
       <thead>
         <tr>
@@ -89,20 +84,7 @@
       </tbody>
     </q-markup-table>
   </div>
-
-
-
-
-
-
-    <q-page class="flex flex-center">
-    
-
-
-        
-        <pre>{{ cooperativa }}</pre>
-    </q-page>
- 
+</q-page>
   
   </template>
   
@@ -138,6 +120,13 @@
        this.cooperativaAll();
     },
     methods:{
+      cooperativaDesc(cp){
+        this.$api.post('activar/'+cp.id).then((response)=>{ 
+            this.cooperativaAll();
+
+        })
+
+      },
       cooperativaAll(){
       //this.q.loading.show()  
       this.$api.get('cooperativa').then((response)=>{ 
@@ -145,10 +134,18 @@
            })
             },
       cooperativaCreate(){
+        if(this.cooperativ.id=='' || this.cooperativ.id==undefined){
       this.$api.post('cooperativa' , this.cooperativ).then((response)=>{ 
         this.cooperativaDialog=false;
         this.cooperativaAll();
            })
+          }
+           else{
+            this.$api.put('cooperativa/'+this.cooperativ.id , this.cooperativ).then((response)=>{ 
+        this.cooperativaDialog=false;
+        this.cooperativaAll();
+           })
+           }
             },
       cooperativaDelete(row) {
       if(confirm('Esta seguro de eliminar la cooperativa')){
