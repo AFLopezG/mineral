@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Http\Requests;
-//use App\Http\Requests\UpdateClienteRequest;
+use App\Http\Requests\UpdateClienteRequest;
 
 class ClienteController extends Controller
 {
@@ -77,7 +77,13 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         //
-        
+        $cliente=Cliente::find($request->id);
+        $cliente->nombre=$request->nombre;
+        $cliente->ci=$request->ci;
+        $cliente->telefono=$request->telefono;
+        $cliente->celular=$request->celular;
+        $cliente->cooperativa_id=$request->cooperativa_id;
+        $cliente->save();
         return response()->json($cliente, status:200);
 
     }
@@ -92,5 +98,14 @@ class ClienteController extends Controller
     {
         //
         $cliente->delete();
+    }
+
+    public function activarCliente($id){
+        $cliente=Cliente::find($id);
+        if($cliente->activo==true)
+            $cliente->activo=false;
+        else
+            $cliente->activo=true;
+        $cliente->save();
     }
 }

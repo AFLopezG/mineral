@@ -89,6 +89,8 @@
   </template>
   
   <script>
+import {date} from 'quasar'
+
   export default{
     name: 'IndexPage',
     data () {
@@ -155,8 +157,8 @@
             }         
          },
       cooperativaEdit(row){
-      this.cooperativ=row;
-      this.cooperativaDialog=true;
+        this.coopeerativ=row;
+        this.cooprativaDialog=true;
       }  
 
         }   

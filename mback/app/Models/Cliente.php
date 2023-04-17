@@ -16,7 +16,6 @@ class Cliente extends Model
         'celular',
         'activo',
         'fecha',
-        'cooperativa',
         'cooperativa_id',
      ];
    //protected $hidden = ["created_at", "updated_at"];
