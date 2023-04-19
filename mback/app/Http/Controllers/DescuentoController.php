@@ -31,6 +31,15 @@ class DescuentoController extends Controller
     public function listDescuento($id){
         return Descuento::where('cooperativa_id',$id)->get();
     }
+
+    public function descuentoActivar($id){
+        $descuento= Descuento::find($id);
+        if($descuento->activo)
+            $descuento->activo=false;
+        else
+            $descuento->activo=true;
+        $descuento->save();
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -46,7 +55,7 @@ class DescuentoController extends Controller
         $descuento->fijo=$request->fijo;
         $descuento->cooperativa_id=$request->cooperativa_id;
         $descuento->save();
-        
+
     }
 
     /**
@@ -78,7 +87,7 @@ class DescuentoController extends Controller
      * @param  \App\Models\Descuento  $descuento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Descuento $descuento)
+    public function update(UpdateDescuentoRequest $request, Descuento $descuento)
     {
         return response()->json($descuento, status:200);
     }
@@ -91,6 +100,6 @@ class DescuentoController extends Controller
      */
     public function destroy(Descuento $descuento)
     {
-        $cliente->delete();
+        $descuento->delete();
     }
 }

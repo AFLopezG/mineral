@@ -9,14 +9,18 @@ class Quincena extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'plata', 
-        'plomo', 
-        'zinc', 
-        'estano', 
-        'alplata', 
-        'alplomo', 
-        'alzinc', 
-        'alestano', 
+        'plata',
+        'plomo',
+        'zinc',
+        'estano',
+        'alplata',
+        'alplomo',
+        'alzinc',
+        'alestano',
+        'explata',
+        'explomo',
+        'exzinc',
+        'exestano',
         'fecha'
      ];
      protected $hidden = ["created_at", "updated_at"];

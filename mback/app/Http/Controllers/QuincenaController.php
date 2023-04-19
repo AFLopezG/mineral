@@ -16,6 +16,8 @@ class QuincenaController extends Controller
     public function index()
     {
         //
+        return Quincena::orderBy('id','desc')->limit(10)->get();
+
     }
 
     /**
@@ -37,6 +39,22 @@ class QuincenaController extends Controller
     public function store(StoreQuincenaRequest $request)
     {
         //
+        if(Quincena::whereDate('fecha',$request->fecha)->count()==0){
+            $quincena=new Quincena();
+            $quincena->plata=$request->plata;
+            $quincena->plomo=$request->plomo;
+            $quincena->zinc=$request->zinc;
+            $quincena->estano=$request->estano;
+            $quincena->alplata=$request->alplata;
+            $quincena->alplomo=$request->alplomo;
+            $quincena->alzinc=$request->alzinc;
+            $quincena->alestano=$request->alestano;
+            $quincena->explata=$request->explata;
+            $quincena->explomo=$request->explomo;
+            $quincena->exzinc=$request->exzinc;
+            $quincena->exestano=$request->exestano;
+            $quincena->fecha=$request->fecha;
+            $quincena->save();}
     }
 
     /**
@@ -71,6 +89,20 @@ class QuincenaController extends Controller
     public function update(UpdateQuincenaRequest $request, Quincena $quincena)
     {
         //
+        $quincena= Quincena::find($request->id);
+        $quincena->plata=$request->plata;
+        $quincena->plomo=$request->plomo;
+        $quincena->zinc=$request->zinc;
+        $quincena->estano=$request->estano;
+        $quincena->alplata=$request->alplata;
+        $quincena->alplomo=$request->alplomo;
+        $quincena->alzinc=$request->alzinc;
+        $quincena->alestano=$request->alestano;
+        $quincena->explata=$request->explata;
+        $quincena->explomo=$request->explomo;
+        $quincena->exzinc=$request->exzinc;
+        $quincena->exestano=$request->exestano;
+        $quincena->save();
     }
 
     /**

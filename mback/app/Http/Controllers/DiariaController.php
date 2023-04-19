@@ -16,6 +16,7 @@ class DiariaController extends Controller
     public function index()
     {
         //
+        return Diaria::orderBy('id','desc')->limit(10)->get();
     }
 
     /**
@@ -37,6 +38,14 @@ class DiariaController extends Controller
     public function store(StoreDiariaRequest $request)
     {
         //
+        if(Diaria::whereDate('fecha',$request->fecha)->count()==0){
+        $diaria=new Diaria;
+        $diaria->plata=$request->plata;
+        $diaria->plomo=$request->plomo;
+        $diaria->zinc=$request->zinc;
+        $diaria->estano=$request->estano;
+        $diaria->fecha=$request->fecha;
+        $diaria->save();}
     }
 
     /**
@@ -71,6 +80,12 @@ class DiariaController extends Controller
     public function update(UpdateDiariaRequest $request, Diaria $diaria)
     {
         //
+        $diaria= Diaria::find($request->id);
+        $diaria->plata=$request->plata;
+        $diaria->plomo=$request->plomo;
+        $diaria->zinc=$request->zinc;
+        $diaria->estano=$request->estano;
+        $diaria->save();
     }
 
     /**
