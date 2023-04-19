@@ -19,6 +19,7 @@
       <q-btn dense @click="cooperativaEdit (props.row)" color="yellow" icon="edit"></q-btn>
       <q-btn dense @click="cooperativaDelete (props.row)" color="red" icon="delete"></q-btn>
       <q-btn dense @click="cooperativaDesc (props.row)" color="blue" icon="rule"></q-btn>
+      <q-btn dense @click="verDescuento(props.row)" color="accent" icon="local_offer"></q-btn>
     </q-td>
 
   </template>
@@ -42,12 +43,29 @@
       <q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" ></q-btn>
     </q-form>
   </q-card-section>
-  </q-card>
-  
-</q-dialog>
-  
-  
+  </q-card>  
+</q-dialog>  
 
+<q-dialog v-model="descuentoDialog">
+  <q-card>
+    <q-card-section>
+      <div class="text-h6">Regsitro Descuento</div>
+    </q-card-section>
+    <q-card-section>
+    <q-form @submit="descuentoCreate">
+      <div class="row">
+        <div class="col-3"><q-input dense outlined v-model="descuento.nombre" label="Nombre" required/></div>
+        <div class="col-3"><q-input dense outlined v-model="descuento.porcentaje" step="0.1" label="Porcentaje" /></div>
+        <div class="col-3"><q-input dense outlined v-model="descuento.fijo" step="0.1" label="fijo" /></div>
+        <div class="col-3"><q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" /></div>
+    </div>      
+    </q-form>
+    <q-table  :rows="descuentos" :columns="columns" row-key="name" />
+    
+    
+  </q-card-section>
+  </q-card>  
+</q-dialog>  
     
     <div class="q-pa-md" hidden >
     <q-markup-table>
@@ -95,11 +113,21 @@ import {date} from 'quasar'
     name: 'IndexPage',
     data () {
               return{
+                columns:[
+                  {field:'nombre',name:'nombre',label:'nombre'},
+                  {field:'porcentaje',name:'porcentaje',label:'porcentaje'},
+                  {field:'fijo',name:'fijo',label:'fijo'},
+                  {field:'activo',name:'activo',label:'activo'},
+                ],
+                descuentos:[],
+                descuento:{},
+                descuentoDialog:false,
                 estados:['ACTIVO', 'PASIVO'],
                 cooperativaFilter:'',
                 cooperativaDialog:false,
                 cooperativa:[],
                 cooperativ:{},
+                coop:{},
                 cooperativaColum:[
                 {name:'opcion', label:'Opcion', field:'opcion', sortable:true},
                 {name:'id', label:'Numero', field:'id', sortable:true},
@@ -122,6 +150,26 @@ import {date} from 'quasar'
        this.cooperativaAll();
     },
     methods:{
+      descuentoCreate(){
+        if(this.descuento.porcentaje=='' || this.descuento.porcentaje==undefined)
+          this.descuento.porcentaje=0
+        if(this.descuento.fijo=='' || this.descuento.fijo==undefined)
+          this.descuento.fijo=0
+          
+        this.descuento.cooperativa_id=this.coop.id
+        this.$api.post('descuento/',this.descuento).then((response)=>{
+            console.log(response.data)
+            this.verDescuento(this.coop)
+        })
+
+      },
+      verDescuento(cp){
+        this.coop=cp
+        this.$api.post('listDescuento/'+cp.id).then((response)=>{ 
+          this.descuentos=response.data
+          this.descuentoDialog=true;
+        })
+      },
       cooperativaDesc(cp){
         this.$api.post('activar/'+cp.id).then((response)=>{ 
             this.cooperativaAll();
@@ -148,7 +196,7 @@ import {date} from 'quasar'
         this.cooperativaAll();
            })
            }
-            },
+        },
       cooperativaDelete(row) {
       if(confirm('Esta seguro de eliminar la cooperativa')){
         this.$api.delete('cooperativa/'+row.id).then((response)=>{ 

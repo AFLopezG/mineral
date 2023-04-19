@@ -28,16 +28,24 @@ class DescuentoController extends Controller
         //
     }
 
+    public function listDescuento($id){
+        return Descuento::where('cooperativa_id',$id)->get();
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreDescuentoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDescuentoRequest $request)
     {
-        $descuento=Descuento::create($request->all());
-        return response()->json($descuento, status:200);
+        //return $request;
+        $descuento=new Descuento;
+        $descuento->nombre=$request->nombre;
+        $descuento->porcentaje=$request->porcentaje;
+        $descuento->fijo=$request->fijo;
+        $descuento->cooperativa_id=$request->cooperativa_id;
+        $descuento->save();
         
     }
 
