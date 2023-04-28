@@ -82,7 +82,7 @@ module.exports = configure(function (ctx) {
       env: {
         API: ctx.dev
           ? 'http://localhost:8000/api/'
-          : 'https://mback/api/'
+          : 'https://bmineral.siscenter.org/api/'
       }
 
     },
