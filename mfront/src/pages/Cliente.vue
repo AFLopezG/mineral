@@ -1,11 +1,11 @@
 <template>
   <q-page>
-    <div class="q-pa-md">
-    <h4>REGISTRO DE CLIENTES</h4>
-    <q-table title="Clientes" :rows="clientes" :columns="colcliente" row-key="name" :filter="clienteFilter">
+    <div class="q-pa-xs">
+<!--    <h4>REGISTRO DE CLIENTES</h4>-->
+    <q-table title="Registro clientes" :rows="clientes" :columns="colcliente" row-key="name" :filter="clienteFilter">
       <template v-slot:top-right>
-        <q-btn @click="dialogCliente=true; cliente={}" color="green" icon="add" label="Registrar"  />
-          <q-input borderless dense debounce="300" v-model="clienteFilter" placeholder="Buscar">
+        <q-btn @click="dialogCliente=true; cliente={}" color="green" icon="add_circle_outline" label="Registrar" no-caps />
+          <q-input outlined dense debounce="300" v-model="clienteFilter" placeholder="Buscar">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -17,7 +17,7 @@
         <q-btn dense @click="clienteDelete (props.row)" color="red" icon="delete"></q-btn>
         <q-btn dense @click="clienteDesc (props.row)" color="blue" icon="rule"></q-btn>
       </q-td>
-  
+
     </template>
       </q-table>
       <q-dialog v-model="dialogCliente">
@@ -25,19 +25,19 @@
           <q-card-section>
             <div class="text-h6">Agregar Cliente</div>
           </q-card-section>
-          <q-card-section>
+          <q-card-section class="q-pt-none">
           <q-form @submit="clienteCreate">
-            <q-input outlined v-model="cliente.ci" label="Cedula de Identidad"/>
-            <q-input outlined v-model="cliente.nombre" label="Nombre Completo"/>
-            <q-input outlined v-model="cliente.telefono" label="Telefono"/>
-            <q-input outlined v-model="cliente.celular" label="Celular"/>
-            <q-select outlined v-model="cooperativa" label=" Cooperativa" :options="cooperativas"/>
-            
+            <q-input dense outlined v-model="cliente.ci" label="Cedula de Identidad"/>
+            <q-input dense outlined v-model="cliente.nombre" label="Nombre Completo"/>
+            <q-input dense outlined v-model="cliente.telefono" label="Telefono"/>
+            <q-input dense outlined v-model="cliente.celular" label="Celular"/>
+            <q-select dense outlined v-model="cooperativa" label=" Cooperativa" :options="cooperativas"/>
+
             <q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" ></q-btn>
           </q-form>
         </q-card-section>
         </q-card>
-        
+
       </q-dialog>
 
       <q-dialog v-model="dialogEdit">
@@ -52,17 +52,17 @@
             <q-input outlined v-model="cliente2.telefono" label="Telefono"/>
             <q-input outlined v-model="cliente2.celular" label="Celular"/>
             <q-select outlined v-model="cooperativa" label=" Cooperativa" :options="cooperativas"/>
-            
+
             <q-btn type="submit" class="full-width" color="yellow" label="Guardar" icon="check" ></q-btn>
           </q-form>
         </q-card-section>
         </q-card>
-        
+
       </q-dialog>
   </div>
     </q-page>
   </template>
-  
+
   <script>
 import {date} from 'quasar'
   export default{
@@ -101,7 +101,7 @@ import {date} from 'quasar'
           return false
         }
         this.cliente2.cooperativa_id=this.cooperativa.id
-        this.$api.put('cliente/'+this.cliente2.id,this.cliente2).then((response)=>{ 
+        this.$api.put('cliente/'+this.cliente2.id,this.cliente2).then((response)=>{
           this.dialogEdit=false
           this.getCliente()
         })
@@ -115,13 +115,13 @@ import {date} from 'quasar'
       },
       clienteDelete(row) {
       if(confirm('Esta seguro de eliminar la cliente')){
-        this.$api.delete('cliente/'+row.id).then((response)=>{ 
+        this.$api.delete('cliente/'+row.id).then((response)=>{
         this.getCliente();
            })
-            }         
+            }
          },
       clienteDesc(cp){
-        this.$api.post('activarCliente/'+cp.id).then((response)=>{ 
+        this.$api.post('activarCliente/'+cp.id).then((response)=>{
             this.getCliente();
         })
       },
@@ -132,7 +132,7 @@ import {date} from 'quasar'
         }
         this.cliente.cooperativa_id=this.cooperativa.id
         this.cliente.fecha= date.formatDate( Date.now(),'YYYY-MM-DD HH:mm:ss.sss')
-        this.$api.post('cliente',this.cliente).then((response)=>{ 
+        this.$api.post('cliente',this.cliente).then((response)=>{
           this.dialogCliente=false
           this.getCliente()
         })
@@ -140,7 +140,7 @@ import {date} from 'quasar'
       },
       getCooperativas(){
         this.cooperativas=[]
-        this.$api.get('cooperativa').then((response)=>{ 
+        this.$api.get('cooperativa').then((response)=>{
           response.data.forEach(x => {
             x.label=x.nombre
             this.cooperativas.push(x)
@@ -149,7 +149,7 @@ import {date} from 'quasar'
 
       },
       getCliente(){
-        this.$api.get('cliente').then((response)=>{ 
+        this.$api.get('cliente').then((response)=>{
           this.clientes=response.data
         })
 
@@ -157,4 +157,3 @@ import {date} from 'quasar'
             },
   }
   </script>
-  
