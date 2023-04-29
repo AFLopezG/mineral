@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('quincenas', function (Blueprint $table) {
             $table->id();
+//            http://pimm.mineria.gob.bo/PyoServicios/
+//            coticacion quincenal de minerales 1 de cada mes y 16 de cada mes
             $table->decimal('plata', 10, 2)->nullable()->default(1.1);
             $table->decimal('plomo', 10, 2)->nullable()->default(1.1);
             $table->decimal('zinc', 10, 2)->nullable()->default(1.1);

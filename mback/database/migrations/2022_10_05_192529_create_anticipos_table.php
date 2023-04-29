@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('anticipos', function (Blueprint $table) {
             $table->id();
+//            un lore puede tener varios anticipos
             $table->double('monto')->default(0);
-            $table->date('fecha');
-            $table->string('tipo');
+            $table->date('fecha')->nullable();
+            $table->string('anticipo')->nullable()->comment('contra carga (contra el pago del mineral) o contra transporte (contra el pago del transporte)');
             $table->unsignedBigInteger('lote_id');
             $table->foreign('lote_id')->references('id')->on('lotes');
             $table->timestamps();

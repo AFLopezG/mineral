@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('laboratorios', function (Blueprint $table) {
             $table->id();
+            //de nosotro nuestras leyes de empresa
+            //YA NO SE USA
             $table->string('codigo');
             $table->string('nombre');
             $table->double('plata')->nullable()->default(0);
@@ -22,18 +24,18 @@ return new class extends Migration
             $table->double('zinc')->nullable()->default(0);
             $table->double('estano')->nullable()->default(0);
             $table->double('agua')->nullable()->default(0);
-
+            //leyes del coperativista del cliente
             $table->double('clplata')->nullable();
             $table->double('clplomo')->nullable();
             $table->double('clzinc')->nullable();
             $table->double('clestano')->nullable();
             $table->double('clagua')->nullable();
-
-            $table->double('finplata')->nullable();
-            $table->double('finplomo')->nullable();
-            $table->double('finzinc')->nullable();
-            $table->double('finestano')->nullable();
-            $table->double('finagua')->nullable();
+            //leyes oficiales
+            $table->double('finplata')->nullable()->comment('(plata + clplata)/2');
+            $table->double('finplomo')->nullable()->comment('(plomo + clplomo)/2');
+            $table->double('finzinc')->nullable()->comment('(zinc + clzinc)/2');
+            $table->double('finestano')->nullable()->comment('(estano + clestano)/2');
+            $table->double('finagua')->nullable()->comment('(agua + clagua)/2');
 
             $table->unsignedBigInteger('lote_id');
             $table->foreign('lote_id')->references('id')->on('lotes');

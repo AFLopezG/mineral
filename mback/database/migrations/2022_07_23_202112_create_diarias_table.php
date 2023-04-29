@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('diarias', function (Blueprint $table) {
             $table->id();
+            // cotizacion diaria
+            //http://pimm.mineria.gob.bo/PyoServicios/
             $table->decimal('plata', 10, 2)->nullable()->default(1.1);
             $table->decimal('plomo', 10, 2)->nullable()->default(1.1);
             $table->decimal('zinc', 10, 2)->nullable()->default(1.1);
             $table->decimal('estano', 10, 2)->nullable()->default(1.1);
-            $table->date('fecha');
+            $table->date('fecha')->nullable();
             $table->timestamps();
         });
     }
