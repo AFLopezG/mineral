@@ -13,9 +13,27 @@
     </template>
     <template v-slot:body-cell-opcion="props">
       <q-td :props="props">
-        <q-btn dense @click="clienteEdit (props.row)" color="yellow" icon="edit"></q-btn>
-        <q-btn dense @click="clienteDelete (props.row)" color="red" icon="delete"></q-btn>
-        <q-btn dense @click="clienteDesc (props.row)" color="blue" icon="rule"></q-btn>
+        <q-btn-dropdown color="red" label="Opcion">
+          <q-list>
+            <q-item clickable v-close-popup @click="clienteEdit (props.row)">
+              <q-item-section>
+                <q-item-label>Editar</q-item-label>
+              </q-item-section>
+            </q-item>
+    
+            <q-item clickable v-close-popup @click="clienteDelete(props.row)">
+              <q-item-section>
+                <q-item-label>Eliminar</q-item-label>
+              </q-item-section>
+            </q-item>
+    
+            <q-item clickable v-close-popup @click="clienteDesc (props.row)">
+              <q-item-section>
+                <q-item-label>Activar</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </q-td>
 
     </template>
@@ -79,11 +97,11 @@ import {date} from 'quasar'
       cliente2:{},
       colcliente:[
         {name:'opcion',field:'opcion',label:'opcion'},
-        {name:'id',field:'id',label:'id'},
+       // {name:'id',field:'id',label:'id'},
         {name:'nombre',field:'nombre',label:'nombre'},
         {name:'ci',field:'ci',label:'ci'},
-        {name:'telefono',field:'telefono',label:'telefono'},
-        {name:'celular',field:'celular',label:'celular'},
+      //  {name:'telefono',field:'telefono',label:'telefono'},
+        //{name:'celular',field:'celular',label:'celular'},
         {name:'activo',field:'activo',label:'activo'},
         {name:'cooperativa',field:row=>row.cooperativa.nombre,label:'cooperativa'},
       ]

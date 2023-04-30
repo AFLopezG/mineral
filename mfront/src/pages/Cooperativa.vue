@@ -14,19 +14,38 @@
         </q-input>
   </template>
   <template v-slot:body-cell-opcion="props">
+
     <q-td :props="props">
-      <q-btn dense @click="cooperativaEdit (props.row)" color="yellow" icon="edit">
-        <q-tooltip>Editar</q-tooltip>
-      </q-btn>
-      <q-btn dense @click="cooperativaDelete (props.row)" color="red" icon="delete">
-        <q-tooltip>Eliminar</q-tooltip>
-      </q-btn>
-      <q-btn dense @click="cooperativaDesc (props.row)" color="blue" icon="rule">
-        <q-tooltip>Activo/Inactivo</q-tooltip>
-      </q-btn>
-      <q-btn dense @click="verDescuento(props.row)" color="accent" icon="local_offer">
-        <q-tooltip>Ver Descuentos</q-tooltip>
-      </q-btn>
+      <q-btn-dropdown color="red" label="OPCION">
+        <q-list>
+          <q-item clickable v-close-popup @click="cooperativaEdit (props.row)">
+            <q-item-section>
+              <q-item-label>  
+                  Editar    
+            </q-item-label>
+            </q-item-section>
+          </q-item>
+  
+          <q-item clickable v-close-popup @click="cooperativaDelete (props.row)">
+            <q-item-section>
+              <q-item-label>Eliminar</q-item-label>
+            </q-item-section>
+          </q-item>
+  
+          <q-item clickable v-close-popup @click="cooperativaDesc (props.row)">
+            <q-item-section>
+              <q-item-label>Activar</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="verDescuento(props.row)">
+            <q-item-section>
+              <q-item-label>Descuentos</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
+
+
     </q-td>
   </template>
   <template v-slot:body-cell-estado="props">
@@ -70,7 +89,7 @@
         <div class="col-3"><q-input dense outlined v-model="descuento.nombre" label="Nombre" required/></div>
         <div class="col-3"><q-input dense outlined v-model="descuento.porcentaje" step="0.1" label="Porcentaje" /></div>
         <div class="col-3"><q-input dense outlined v-model="descuento.fijo" step="0.1" label="fijo" /></div>
-        <div class="col-3"><q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" /></div>
+        <div class="col-3"><q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" dense /></div>
     </div>
     </q-form>
     <q-table  :rows="descuentos" :columns="columns" row-key="name" />
@@ -143,13 +162,13 @@ import {date} from 'quasar'
                 coop:{},
                 cooperativaColum:[
                 {name:'opcion', label:'Opcion', field:'opcion', sortable:true},
-                {name:'id', label:'Numero', field:'id', sortable:true},
+                //{name:'id', label:'Numero', field:'id', sortable:true},
                 {name:'nombre', label:'Nombre', field:'nombre', sortable:true},
-                {name:'direccion', label:'Direccion', field:'direccion', sortable:true},
+                //{name:'direccion', label:'Direccion', field:'direccion', sortable:true},
                 {name:'representante', label:'Representante', field:'representante', sortable:true},
-                {name:'nim', label:'NIM', field:'nim', sortable:true},
-                {name:'nit', label:'NIT', field:'nit', sortable:true},
-                {name:'celular', label:'Celular', field:'celular', sortable:true},
+                //{name:'nim', label:'NIM', field:'nim', sortable:true},
+                //{name:'nit', label:'NIT', field:'nit', sortable:true},
+                //{name:'celular', label:'Celular', field:'celular', sortable:true},
                 {name:'estado', label:'Estado', field:'estado', sortable:true},
 
                 ]
@@ -223,8 +242,8 @@ import {date} from 'quasar'
         })
       },
       cooperativaEdit(row){
-        this.coopeerativ=row;
-        this.cooprativaDialog=true;
+        this.cooperativ=row;
+        this.cooperativaDialog=true;
       }
 
         }
