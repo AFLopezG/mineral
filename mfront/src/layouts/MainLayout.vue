@@ -161,6 +161,11 @@ export default {
           to: "/Anticipo",
         },
         {
+          title: "Diario/Quincenal",
+          icon: "o_money",
+          to: "/Diario",
+        },
+        {
           title: "Liquidacion",
           icon: "o_local_drink",
           to: "/Liquidacion",

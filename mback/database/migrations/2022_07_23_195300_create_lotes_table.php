@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo');
+            $table->string('codigo')->nullable();
             $table->string('material')->nullable()->comment('puede ser enbrozar o concentrado o gianina');
             $table->double('pesobruto',11,2)->nullable()->comment('peso brutos de los sacos');
             $table->integer('saco')->nullable()->comment('cantidad de sacos');
@@ -27,7 +27,7 @@ return new class extends Migration
 
 //            mostrar aparte
             //de nosotro nuestras leyes de empresa
-            $table->string('codigo')->nullable();
+            $table->string('codigolab')->nullable();
             $table->string('nombre')->nullable();
             $table->double('plata')->nullable()->default(0);
             $table->double('plomo')->nullable()->default(0);
