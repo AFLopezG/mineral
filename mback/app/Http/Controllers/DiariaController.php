@@ -16,7 +16,7 @@ class DiariaController extends Controller
     public function index()
     {
         //
-        return Diaria::orderBy('id','desc')->limit(10)->get();
+        return Diaria::orderBy('id','desc')->limit(30)->get();
     }
 
     /**

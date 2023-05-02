@@ -1,17 +1,10 @@
 <template>
   <q-page class="flex flex-center">
-    <img
+    <q-img
     alt="Quasar logo"
     src="~assets/empresa.svg"
-    style="width: 600px; height: 600px"  
-    >
-    
-    <img
-    
-     
-     
-    >
-    
+    width="450px"
+    />
   </q-page>
 </template>
 
