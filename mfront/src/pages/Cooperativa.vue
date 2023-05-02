@@ -21,11 +21,7 @@
       <q-btn dense @click="cooperativaDesc (props.row)" color="blue" icon="rule"></q-btn>
       <q-btn dense @click="verDescuento(props.row)" color="accent" icon="local_offer"></q-btn>
     </q-td>
-  </template>
-  <template v-slot:body-cell-estado="props">
-    <q-td :props="props">
-      <q-badge :color="props.row.estado=='ACTIVO'?'green':'red'">{{ props.row.estado }}</q-badge>
-    </q-td>
+
   </template>
 </q-table>
 <q-dialog v-model="cooperativaDialog">
@@ -52,10 +48,8 @@
 
 <q-dialog v-model="descuentoDialog">
   <q-card>
-    <q-card-section class="row items-center">
-      <div class="text-h6">Registro Descuento <span class="text-bold">{{ coop.nombre }}</span> </div>
-      <q-space />
-      <q-btn icon="close" flat round dense v-close-popup />
+    <q-card-section>
+      <div class="text-h6">Regsitro Descuento</div>
     </q-card-section>
     <q-card-section>
     <q-form @submit="descuentoCreate">
