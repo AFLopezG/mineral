@@ -20,18 +20,18 @@
         <q-list>
           <q-item clickable v-close-popup @click="cooperativaEdit (props.row)">
             <q-item-section>
-              <q-item-label>  
-                  Editar    
+              <q-item-label>
+                  Editar
             </q-item-label>
             </q-item-section>
           </q-item>
-  
+
           <q-item clickable v-close-popup @click="cooperativaDelete (props.row)">
             <q-item-section>
               <q-item-label>Eliminar</q-item-label>
             </q-item-section>
           </q-item>
-  
+
           <q-item clickable v-close-popup @click="cooperativaDesc (props.row)">
             <q-item-section>
               <q-item-label>Activar</q-item-label>
@@ -81,8 +81,8 @@
     <q-form @submit="descuentoCreate">
       <div class="row">
         <div class="col-3"><q-input dense outlined v-model="descuento.nombre" label="Nombre" required/></div>
-        <div class="col-3"><q-input dense outlined v-model="descuento.porcentaje" step="0.1" label="Porcentaje" /></div>
-        <div class="col-3"><q-input dense outlined v-model="descuento.fijo" step="0.1" label="fijo" /></div>
+        <div class="col-3"><q-input dense outlined v-model="descuento.porcentaje" step="0.01" type="number" label="Porcentaje" /></div>
+        <div class="col-3"><q-input dense outlined v-model="descuento.fijo" step="0.1" type="number" label="fijo" /></div>
         <div class="col-3"><q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" dense /></div>
     </div>
     </q-form>
@@ -140,10 +140,11 @@ import {date} from 'quasar'
     data () {
               return{
                 columns:[
-                  {field:'nombre',name:'nombre',label:'nombre'},
-                  {field:'porcentaje',name:'porcentaje',label:'porcentaje'},
-                  {field:'fijo',name:'fijo',label:'fijo'},
-                  {field:'activo',name:'activo',label:'activo'},
+                  {field:'op',name:'op',label:'op'},
+                  {field:'nombre',name:'nombre',label:'NOMBRE'},
+                  {field:'porcentaje',name:'porcentaje',label:'PORCENT'},
+                  {field:'fijo',name:'fijo',label:'FIJO'},
+                  {field:'activo',name:'activo',label:'ACTIVO'},
                 ],
                 descuentos:[],
                 descuento:{},
@@ -186,6 +187,7 @@ import {date} from 'quasar'
         this.$api.post('descuento/',this.descuento).then((response)=>{
             console.log(response.data)
             this.verDescuento(this.coop)
+            this.descuento={}
         })
 
       },
@@ -210,6 +212,7 @@ import {date} from 'quasar'
            })
             },
       cooperativaCreate(){
+
         if(this.cooperativ.id=='' || this.cooperativ.id==undefined){
       this.$api.post('cooperativa' , this.cooperativ).then((response)=>{
         this.cooperativaDialog=false;
