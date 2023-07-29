@@ -149,14 +149,14 @@ export default {
           icon: "o_book",
           to: "/Lote",
         },
-        {
-          title: "Leyes",
-          icon: "o_send",
-          to: "/Ley",
-        },
+        // {
+        //   title: "Leyes",
+        //   icon: "o_send",
+        //   to: "/Ley",
+        // },
         {
           title: "Anticipos",
-          icon: "o_money",
+          icon: "o_credit_card",
           to: "/Anticipo",
         },
         {

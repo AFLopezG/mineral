@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
     Route::apiResource('/cooperativa', \App\Http\Controllers\CooperativaController::class);
     Route::apiResource('/cliente', \App\Http\Controllers\ClienteController::class);
 	Route::apiResource('/lote', \App\Http\Controllers\LoteController::class);
+	Route::apiResource('/anticipo', \App\Http\Controllers\AnticipoController::class);
     Route::apiResource('/descuento', \App\Http\Controllers\DescuentoController::class);
     Route::apiResource('/diaria', \App\Http\Controllers\DiariaController::class);
     Route::apiResource('/quincena', \App\Http\Controllers\QuincenaController::class);

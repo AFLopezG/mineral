@@ -3,6 +3,7 @@ import Cooperativa from "pages/Cooperativa";
 import Cliente from "pages/Cliente";
 import Diario from "pages/Diario";
 import Lotes from "pages/Lotes";
+import Anticipo from "pages/Anticipo.vue";
 //import Registro from "pages/Registro";
 
 const routes = [
@@ -15,6 +16,7 @@ const routes = [
       { path: 'cliente', component: Cliente },
       { path: 'diario', component: Diario },
      { path: 'lote', component: Lotes },
+      { path: 'anticipo', component: Anticipo },
       //{ path: 'registro', component: Registro },
     ]
   },
