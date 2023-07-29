@@ -24,5 +24,12 @@ class DatabaseSeeder extends Seeder
         // ]);
         //$this->call([
        //     Agprecio::class,]);
+        $this->call([
+            CooperativaSeeder::class,
+            ClienteSeeder::class,
+//            LoteSeeder::class,
+//            AgprecioSeeder::class,
+//            UserSeeder::class,
+        ]);
     }
 }

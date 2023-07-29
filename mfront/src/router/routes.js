@@ -2,7 +2,7 @@ import IndexPage from "pages/IndexPage";
 import Cooperativa from "pages/Cooperativa";
 import Cliente from "pages/Cliente";
 import Diario from "pages/Diario";
-//import Lotes from "pages/Lotes";
+import Lotes from "pages/Lotes";
 //import Registro from "pages/Registro";
 
 const routes = [
@@ -14,7 +14,7 @@ const routes = [
       { path: 'cooperativa', component: Cooperativa },
       { path: 'cliente', component: Cliente },
       { path: 'diario', component: Diario },
-     // { path: 'lotes', component: Lotes },
+     { path: 'lote', component: Lotes },
       //{ path: 'registro', component: Registro },
     ]
   },

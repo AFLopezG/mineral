@@ -1,9 +1,10 @@
 <template>
   <q-page>
   <q-table title="Registro de Cooperativas"
-  :filter="cooperativaFilter"
-  :columns="cooperativaColum"
-  :rows="cooperativa"
+            :filter="cooperativaFilter"
+            :columns="cooperativaColum"
+            :rows="cooperativa"
+           :rows-per-page-options="[0]"
   >
   <template v-slot:top-right>
       <q-btn @click="cooperativaDialog=true" color="green" icon="add_circle_outline" label="Registrar" no-caps />
@@ -15,7 +16,7 @@
   </template>
   <template v-slot:body-cell-opcion="props">
 
-    <q-td :props="props">
+    <q-td :props="props" auto-width>
       <q-btn-dropdown color="red" label="OPCION">
         <q-list>
           <q-item clickable v-close-popup @click="cooperativaEdit (props.row)">

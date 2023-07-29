@@ -1,0 +1,195 @@
+<template>
+    <q-page>
+<!--      <div class="text-h6">Registro de lotes</div>-->
+      <q-table title="Lotes registrados" :filter="loteFilter" :columns="loteColum" :rows="lotes"
+      :rows-per-page-options="[0]" :loading="loading">
+      <template v-slot:top-right>
+          <q-btn @click="loteAgregar" :loading="loading" color="green" icon="add_circle_outline" label="Registrar" no-caps />
+        <q-btn @click="loteAll" flat dense :loading="loading" color="primary" icon="refresh" no-caps />
+            <q-input outlined dense debounce="300" v-model="loteFilter" placeholder="Buscar">
+              <template v-slot:append>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+      </template>
+      <template v-slot:body-cell-opcion="props">
+        <q-td :props="props" auto-width>
+          <q-btn-dropdown color="red" label="OPCION">
+            <q-list>
+              <q-item clickable v-close-popup @click="loteEdit (props.row)">
+                <q-item-section>
+                  <q-item-label>
+                      Editar
+                </q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="loteDelete (props.row)">
+                <q-item-section>
+                  <q-item-label>
+                      Eliminar
+                </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+        </q-td>
+      </template>
+        <template v-slot:body-cell-mineral="props">
+          <q-td :props="props" >
+            <q-chip :label="props.row.mineral"
+                    :color="props.row.mineral=='Plata'?'grey-8':props.row.mineral=='Zinc'?'blue-8':props.row.mineral=='Plomo'?'green-8':''"
+                    text-color="white"
+            />
+          </q-td>
+        </template>
+        <template v-slot:body-cell-tipo="props">
+          <q-td :props="props" >
+            <q-chip :label="props.row.tipo"
+                    :color="props.row.tipo=='Concentrado'?'green-8':'orange-8'"
+                    text-color="white"
+            />
+          </q-td>
+        </template>
+    </q-table>
+      <pre>{{lotes}}</pre>
+    <q-dialog v-model="loteDialog">
+      <q-card style="width: 650px; max-width: 90vw; max-height: 90vh; overflow: auto;">
+        <q-card-section>
+          <div class="text-h6">Agregar lote</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+        <q-form @submit="loteCreate">
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <q-select dense outlined v-model="lote.mineral" label="Mineral" :options="$minerales"></q-select>
+            </div>
+            <div class="col-12 col-md-3">
+              <q-select dense outlined v-model="lote.tipo" label="Tipo" :options="$tipos"></q-select>
+            </div>
+            <div class="col-12 col-md-3">
+              <q-input required dense outlined v-model="lote.peso" label="Peso" type="number" step="0.01"></q-input>
+            </div>
+            <div class="col-12 col-md-3">
+              <q-input dense outlined v-model="lote.saco" label="Sacos" type="number"></q-input>
+            </div>
+            <div class="col-12 col-md-4">
+              <q-select dense outlined v-model="lote.cliente_id" label="Proveedor" :options="provedores"
+                        option-value="id" option-label="nombre" emit-value map-options @filter="filterFn" use-input input-debounce="0">
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No hay resultados
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+            </div>
+            <div class="col-12 col-md-4">
+              <q-input dense outlined v-model="cooperativa" label="Cooperativa" readonly/>
+            </div>
+            <div class="col-12 col-md-4">
+              <q-input dense outlined v-model="lote.fecha" label="Fecha" type="date"></q-input>
+            </div>
+          </div>
+          <q-btn type="submit" class="full-width" :loading="loading" color="green" label="Guardar" icon="check" ></q-btn>
+        </q-form>
+      </q-card-section>
+      </q-card>
+    </q-dialog>
+   </q-page>
+</template>
+<script>
+  import {date} from 'quasar'
+    export default{
+      name: 'IndexPage',
+      data () {
+        return{
+          loading: false,
+          provedores:[],
+          provedoresAll:[],
+          proveedor:{},
+          lotes:[],
+          lote:{},
+          loteFilter:'',
+          loteDialog:false,
+          loteColum:[
+            {name:'opcion', label:'Opcion', field:'opcion', sortable:true},
+            {name:'codigo', label:'Codigo', field:'codigo', sortable:true},
+            {name:'mineral', label:'Mineral', field:'mineral', sortable:true},
+            {name:'tipo', label:'Tipo', field:'tipo', sortable:true},
+            {name:'peso', label:'Peso', field:'peso', sortable:true},
+            {name:'saco', label:'Sacos', field:'saco', sortable:true},
+            {name:'cliente', label:'Proveedor', field : row => row.cliente.nombre, sortable:true},
+            {name:'cooperativa', label:'Cooperativa', field: row => row.cooperativa.nombre, sortable:true},
+          ],
+        }
+      },
+      created(){
+        this.loteAll()
+        this.proveedorAll()
+      },
+      methods:{
+        proveedorAll(){
+          this.$api.get('cliente').then((response)=>{
+            this.provedores = response.data
+            this.provedoresAll = response.data
+          })
+        },
+        loteAgregar(){
+          this.loteDialog=true
+          this.lote.mineral='Plata'
+          this.lote.tipo='Concentrado'
+          this.lote.fecha=date.formatDate(Date.now(),'YYYY-MM-DD')
+        },
+        filterFn (val, update) {
+          if (val === '') {
+            update(() => {
+              this.provedores = this.provedoresAll
+            })
+            return
+          }
+          update(() => {
+            const needle = val.toLowerCase()
+            this.provedores = this.provedoresAll.filter(v => v.nombre.toLowerCase().indexOf(needle) > -1)
+          })
+        },
+        loteAll(){
+        this.loading=true
+          this.$api.get('lote').then((response)=>{
+            this.lotes=response.data
+          }).finally(()=>{
+            this.loading=false
+          })
+        },
+        loteCreate(){
+          this.loading=true
+          this.$api.post('lote' , this.lote).then((response)=>{
+            this.loteDialog=false
+            this.loteAll()
+            this.lote={}
+          }).finally(()=>{
+            this.loading=false
+          })
+        },
+        loteMod(){
+        this.$api.put('lote/'+this.lote2.id,this.lote2).then((response)=>{
+          this.loteModDialog=false
+          this.loteAll()
+          })
+        },
+        loteEdit(row){
+          this.lote2=row
+          this.loteModDialog=true
+        },
+      },
+      computed:{
+        cooperativa () {
+          if(this.lote.cliente_id){
+            let cooperativa= this.provedores.find((item)=>item.id==this.lote.cliente_id).cooperativa
+            return cooperativa.nombre
+          }
+          return ''
+        }
+      }
+    }
+</script>

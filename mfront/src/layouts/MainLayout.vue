@@ -1,7 +1,7 @@
 
 <template>
   <q-layout view="lHh Lpr lff" >
-      <q-header elevated class="">
+      <q-header class="">
         <q-toolbar>
 <!--          <q-toolbar-title>EMPRESA MINERA LA CORDILLERA DEL SUR</q-toolbar-title>-->
           <q-toolbar-title>Empresa minera la cordillera del sur</q-toolbar-title>
@@ -11,7 +11,6 @@
 
       <q-drawer
         v-model="drawer"
-        show-if-above
         :width="200"
       >
         <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
@@ -141,7 +140,7 @@ export default {
           to: "/Cooperativa",
         },
         {
-          title: "Clientes",
+          title: "Proveedores",
           icon: "o_people",
           to: "/Cliente",
         },

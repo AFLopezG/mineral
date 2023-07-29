@@ -9,18 +9,22 @@ class Lote extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'pesobruto',
-        'saco',
-        'tara',
-        'pesohumedo',
-        'fecha',
-        'cliente_id'
+        'mineral',
+        'codigo',
+        'tipo',
+        "peso",
+        "saco",
+        'cliente_id',
+        'cooperativa_id',
+        'fecha'
      ];
      protected $hidden = ["created_at", "updated_at"];
 
      public function cliente(){
          return $this->belongsTo(Cliente::class);
      }
+     public function cooperativa(){
+         return $this->belongsTo(Cooperativa::class);
+     }
 
-   
 }

@@ -50,6 +50,7 @@ return new class extends Migration
 //            $table->unsignedBigInteger('cliente_id');
 //            $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->string('mineral')->nullable();
+            $table->string('codigo')->nullable();
             $table->string('tipo')->nullable();
             $table->double("peso",11,2)->nullable();
             $table->integer("saco")->nullable();

@@ -2,7 +2,7 @@
   <q-page>
     <div class="q-pa-xs">
 <!--    <h4>REGISTRO DE CLIENTES</h4>-->
-    <q-table title="Registro clientes" :rows="clientes" :columns="colcliente" row-key="name" :filter="clienteFilter">
+    <q-table title="Registro clientes" :rows="clientes" :columns="colcliente" row-key="name" :filter="clienteFilter" :rows-per-page-options="[0]">
       <template v-slot:top-right>
         <q-btn @click="dialogCliente=true; cliente={}" color="green" icon="add_circle_outline" label="Registrar" no-caps />
           <q-input outlined dense debounce="300" v-model="clienteFilter" placeholder="Buscar">
@@ -12,7 +12,7 @@
           </q-input>
     </template>
     <template v-slot:body-cell-opcion="props">
-      <q-td :props="props">
+      <q-td :props="props" auto-width>
         <q-btn-dropdown color="red" label="Opcion">
           <q-list>
             <q-item clickable v-close-popup @click="clienteEdit (props.row)">
@@ -20,13 +20,13 @@
                 <q-item-label>Editar</q-item-label>
               </q-item-section>
             </q-item>
-    
+
             <q-item clickable v-close-popup @click="clienteDelete(props.row)">
               <q-item-section>
                 <q-item-label>Eliminar</q-item-label>
               </q-item-section>
             </q-item>
-    
+
             <q-item clickable v-close-popup @click="clienteDesc (props.row)">
               <q-item-section>
                 <q-item-label>Activar</q-item-label>
