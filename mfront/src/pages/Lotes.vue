@@ -14,7 +14,7 @@
       </template>
       <template v-slot:body-cell-opcion="props">
         <q-td :props="props" auto-width>
-          <q-btn-dropdown color="red" label="OPCION">
+          <q-btn-dropdown color="red" label="OPCION" :loading="loading" auto-close>
             <q-list>
               <q-item clickable v-close-popup @click="loteEdit (props.row)">
                 <q-item-section>
@@ -51,29 +51,28 @@
           </q-td>
         </template>
     </q-table>
-      <pre>{{lotes}}</pre>
     <q-dialog v-model="loteDialog">
       <q-card style="width: 650px; max-width: 90vw; max-height: 90vh; overflow: auto;">
         <q-card-section>
-          <div class="text-h6">Agregar lote</div>
+          <div class="text-h6">{{loteOption=='create'?'Registrar':'Editar'}} lote</div>
         </q-card-section>
         <q-card-section class="q-pt-none">
         <q-form @submit="loteCreate">
           <div class="row">
             <div class="col-12 col-md-3">
-              <q-select dense outlined v-model="lote.mineral" label="Mineral" :options="$minerales"></q-select>
+              <q-select outlined v-model="lote.mineral" label="Mineral" :options="$minerales"></q-select>
             </div>
             <div class="col-12 col-md-3">
-              <q-select dense outlined v-model="lote.tipo" label="Tipo" :options="$tipos"></q-select>
+              <q-select outlined v-model="lote.tipo" label="Tipo" :options="$tipos"></q-select>
             </div>
             <div class="col-12 col-md-3">
-              <q-input required dense outlined v-model="lote.peso" label="Peso" type="number" step="0.01"></q-input>
+              <q-input required outlined v-model="lote.peso" label="Peso" type="number" step="0.01"></q-input>
             </div>
             <div class="col-12 col-md-3">
-              <q-input dense outlined v-model="lote.saco" label="Sacos" type="number"></q-input>
+              <q-input outlined v-model="lote.saco" label="Sacos" type="number"></q-input>
             </div>
             <div class="col-12 col-md-4">
-              <q-select dense outlined v-model="lote.cliente_id" label="Proveedor" :options="provedores"
+              <q-select outlined v-model="lote.cliente_id" label="Proveedor" :options="provedores"
                         option-value="id" option-label="nombre" emit-value map-options @filter="filterFn" use-input input-debounce="0">
                 <template v-slot:no-option>
                   <q-item>
@@ -85,13 +84,13 @@
               </q-select>
             </div>
             <div class="col-12 col-md-4">
-              <q-input dense outlined v-model="cooperativa" label="Cooperativa" readonly/>
+              <q-input outlined v-model="cooperativa" label="Cooperativa" readonly/>
             </div>
             <div class="col-12 col-md-4">
-              <q-input dense outlined v-model="lote.fecha" label="Fecha" type="date"></q-input>
+              <q-input outlined v-model="lote.fecha" label="Fecha" type="date"></q-input>
             </div>
           </div>
-          <q-btn type="submit" class="full-width" :loading="loading" color="green" label="Guardar" icon="check" ></q-btn>
+          <q-btn type="submit" class="full-width" :loading="loading" :color="loteOption=='create'?'green':'orange'" :label="loteOption=='create'?'Registrar':'Editar'" :icon="loteOption=='create'?'add_circle_outline':'edit'" no-caps/>
         </q-form>
       </q-card-section>
       </q-card>
@@ -105,6 +104,7 @@
       data () {
         return{
           loading: false,
+          loteOption: '',
           provedores:[],
           provedoresAll:[],
           proveedor:{},
@@ -137,6 +137,7 @@
         },
         loteAgregar(){
           this.loteDialog=true
+          this.loteOption='create'
           this.lote.mineral='Plata'
           this.lote.tipo='Concentrado'
           this.lote.fecha=date.formatDate(Date.now(),'YYYY-MM-DD')
@@ -163,23 +164,41 @@
         },
         loteCreate(){
           this.loading=true
-          this.$api.post('lote' , this.lote).then((response)=>{
-            this.loteDialog=false
-            this.loteAll()
-            this.lote={}
-          }).finally(()=>{
-            this.loading=false
-          })
+          if (this.loteOption=='create'){
+            this.$api.post('lote' , this.lote).then((response)=>{
+              this.loteDialog=false
+              this.loteAll()
+              this.lote={}
+            }).finally(()=>{
+              this.loading=false
+            })
+          }else{
+            this.$api.put('lote/'+this.lote.id , this.lote).then((response)=>{
+              this.loteDialog=false
+              this.loteAll()
+              this.lote={}
+            }).finally(()=>{
+              this.loading=false
+            })
+          }
         },
-        loteMod(){
-        this.$api.put('lote/'+this.lote2.id,this.lote2).then((response)=>{
-          this.loteModDialog=false
-          this.loteAll()
+        loteDelete(row){
+          this.$q.dialog({
+            title: 'Confirmar',
+            message: 'Esta seguro de eliminar el lote?',
+            cancel: true,
+            persistent: true
+          }).onOk(() => {
+            this.loading=true
+            this.$api.delete('lote/'+row.id).then((response)=>{
+              this.loteAll()
+            })
           })
         },
         loteEdit(row){
-          this.lote2=row
-          this.loteModDialog=true
+          this.loteDialog=true
+          this.loteOption='edit'
+          this.lote=row
         },
       },
       computed:{
