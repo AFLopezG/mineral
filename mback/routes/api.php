@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Route;
     Route::apiResource('/quincena', \App\Http\Controllers\QuincenaController::class);
     Route::post('/activar/{id}', [\App\Http\Controllers\CooperativaController::class,'activar']);
     Route::post('/listDescuento/{id}', [\App\Http\Controllers\DescuentoController::class,'listDescuento']);
+    Route::post('/searchLote', [\App\Http\Controllers\LoteController::class,'searchLote']); 
+    Route::post('/buscarQuincena', [\App\Http\Controllers\QuincenaController::class,'buscarQuincena']); 
 
     /*  Route::resource('/descuento',\App\Http\Controllers\DescuentoController::class);
     Route::resource('/diaria',\App\Http\Controllers\DiariaController::class);

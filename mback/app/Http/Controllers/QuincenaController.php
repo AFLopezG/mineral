@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Quincena;
 use App\Http\Requests\StoreQuincenaRequest;
 use App\Http\Requests\UpdateQuincenaRequest;
+use Illuminate\Http\Request;
 
 class QuincenaController extends Controller
 {
@@ -17,6 +18,18 @@ class QuincenaController extends Controller
     {
         //
         return Quincena::orderBy('id','desc')->limit(10)->get();
+
+    }
+
+    public function buscarQuincena(Request $request){
+        $timestamp = strtotime($request->fecha);
+        $dia= date("d", $timestamp);
+        $mes= date("m", $timestamp);
+        $an= date("Y", $timestamp);
+        if($dia>=1 && $dia<=15)
+            return Quincena::whereDate('fecha','>=',$an.'-'.$mes.'-1')->whereDate('fecha','<=',$an.'-'.$mes.'-15')-first();
+        else
+            return Quincena::whereDate('fecha','>=',$an.'-'.$mes.'-16')->whereDate('fecha','<=',$an.'-'.$mes.'-31')-first();
 
     }
 

@@ -6,11 +6,17 @@ use App\Models\Cliente;
 use App\Models\Lote;
 use App\Http\Requests\StoreLoteRequest;
 use App\Http\Requests\UpdateLoteRequest;
+use Illuminate\Http\Request;
 
 class LoteController extends Controller{
     public function index(){
         return Lote::with(['cliente','cooperativa'])->get();
     }
+
+    public function searchLote(Request $request){
+        return Lote::with(['cliente','cooperativa'])->where('codigo',$request->codigo)->first();
+    }
+
     public function store(StoreLoteRequest $request){
         $cliente= Cliente::find($request->cliente_id);
         $countMineral = Lote::where('mineral', $request->mineral)->count()+1;
