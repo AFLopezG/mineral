@@ -16,10 +16,23 @@
           <q-btn-dropdown color="red" label="OPCION" :loading="loading" auto-close>
             <q-list>
               <q-item clickable v-close-popup @click="anticipoEdit (props.row)">
+                <q-item-section avatar>
+                  <q-icon name="edit" />
+                </q-item-section>
                 <q-item-section>
                   <q-item-label>
                       Editar
                 </q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="imprimirOrdenPago(props.row)">
+                <q-item-section avatar>
+                  <q-icon name="print" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>
+                      Imprimir Orden de Pago
+                  </q-item-label>
                 </q-item-section>
               </q-item>
 <!--              <q-item clickable v-close-popup @click="anticipoDelete (props.row)">-->
@@ -128,6 +141,7 @@
       </q-card-section>
       </q-card>
     </q-dialog>
+<!--      <iframe :src="pdf" v-if="pdf" style="width: 100%; height: 100vh"></iframe>-->
    </q-page>
 </template>
 <script>
@@ -138,6 +152,7 @@
         return{
           loading: false,
           anticipoOption: '',
+          pdf: '',
           lotes:[],
           lotesAll:[],
           lote:{},
@@ -192,6 +207,7 @@
         this.loading=true
           this.$api.get('anticipo').then((response)=>{
             this.anticipos=response.data
+            // this.imprimirOrdenPago(this.anticipos[0])
           }).finally(()=>{
             this.loading=false
           })
@@ -203,6 +219,7 @@
               this.anticipoDialog=false
               this.anticipoAll()
               this.anticipo={}
+              this.imprimirOrdenPago(response.data)
             }).finally(()=>{
               this.loading=false
             }).catch((error)=>{
@@ -235,6 +252,9 @@
           this.anticipoDialog=true
           this.anticipoOption='edit'
           this.anticipo=row
+        },
+        imprimirOrdenPago(anticipo){
+          this.pdf=this.$pdf.anticipoMediaCarta(anticipo)
         },
       },
       computed:{
