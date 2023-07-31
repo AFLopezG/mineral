@@ -52,26 +52,40 @@
     </q-table>
     <q-dialog v-model="anticipoDialog">
       <q-card style="width: 650px; max-width: 90vw; max-height: 90vh; overflow: auto;">
-        <q-card-section>
+        <q-card-section class="row items-center">
           <div class="text-h6">{{anticipoOption=='create'?'Registrar':'Editar'}} anticipo</div>
+          <q-space></q-space>
+          <q-btn icon="close" flat round dense @click="anticipoDialog=false" />
         </q-card-section>
         <q-card-section class="q-pt-none">
         <q-form @submit="anticipoCreate">
           <div class="row">
             <div class="col-12 col-md-3">
-              <q-select outlined v-model="anticipo.mineral" label="Mineral" :options="$minerales"></q-select>
+              <q-select outlined v-model="anticipo.tipo" label="Mineral" :options="['Lote','Transporte']"></q-select>
             </div>
-            <div class="col-12 col-md-3">
-              <q-select outlined v-model="anticipo.tipo" label="Tipo" :options="$tipos"></q-select>
+            <div class="col-md-9"></div>
+            <div class="col-12 col-md-4">
+              <q-select outlined v-model="anticipo.lote_id" label="Lote" :options="lotes"
+                        option-value="id" option-label="codigo" emit-value map-options @filter="filterFn" use-input input-debounce="0">
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No hay resultados
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+              <pre>{{anticipo.lote_id}}</pre>
+              <pre>{{loteSearch}}</pre>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-4">
               <q-input required outlined v-model="anticipo.peso" label="Peso" type="number" step="0.01"></q-input>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-4">
               <q-input outlined v-model="anticipo.saco" label="Sacos" type="number"></q-input>
             </div>
             <div class="col-12 col-md-4">
-              <q-select outlined v-model="anticipo.cliente_id" label="Proveedor" :options="provedores"
+              <q-select outlined v-model="anticipo.cliente_id" label="Proveedor" :options="lotes"
                         option-value="id" option-label="nombre" emit-value map-options @filter="filterFn" use-input input-debounce="0">
                 <template v-slot:no-option>
                   <q-item>
@@ -104,9 +118,9 @@
         return{
           loading: false,
           anticipoOption: '',
-          provedores:[],
-          provedoresAll:[],
-          proveedor:{},
+          lotes:[],
+          lotesAll:[],
+          lote:{},
           anticipos:[],
           anticipo:{},
           anticipoFilter:'',
@@ -125,13 +139,13 @@
       },
       created(){
         this.anticipoAll()
-        this.proveedorAll()
+        this.loteAll()
       },
       methods:{
-        proveedorAll(){
-          this.$api.get('cliente').then((response)=>{
-            this.provedores = response.data
-            this.provedoresAll = response.data
+        loteAll(){
+          this.$api.get('lote').then((response)=>{
+            this.lotes = response.data
+            this.lotesAll = response.data
           })
         },
         anticipoAgregar(){
@@ -144,13 +158,13 @@
         filterFn (val, update) {
           if (val === '') {
             update(() => {
-              this.provedores = this.provedoresAll
+              this.lotes = this.lotesAll
             })
             return
           }
           update(() => {
             const needle = val.toLowerCase()
-            this.provedores = this.provedoresAll.filter(v => v.nombre.toLowerCase().indexOf(needle) > -1)
+            this.lotes = this.lotesAll.filter(v => v.nombre.toLowerCase().indexOf(needle) > -1)
           })
         },
         anticipoAll(){
@@ -201,9 +215,16 @@
         },
       },
       computed:{
+        loteSearch () {
+          if(this.anticipo.lote_id){
+            let lote= this.lotes.find((item)=>item.id==this.anticipo.lote_id)
+            return lote
+          }
+          return ''
+        },
         cooperativa () {
           if(this.anticipo.cliente_id){
-            let cooperativa= this.provedores.find((item)=>item.id==this.anticipo.cliente_id).cooperativa
+            let cooperativa= this.lotes.find((item)=>item.id==this.anticipo.cliente_id).cooperativa
             return cooperativa.nombre
           }
           return ''

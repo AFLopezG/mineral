@@ -162,11 +162,10 @@ import {date} from 'quasar'
                 {name:'nombre', label:'Nombre', field:'nombre', sortable:true},
                 //{name:'direccion', label:'Direccion', field:'direccion', sortable:true},
                 {name:'representante', label:'Representante', field:'representante', sortable:true},
-                //{name:'nim', label:'NIM', field:'nim', sortable:true},
-                //{name:'nit', label:'NIT', field:'nit', sortable:true},
-                //{name:'celular', label:'Celular', field:'celular', sortable:true},
+                {name:'nim', label:'NIM', field:'nim', sortable:true},
+                {name:'nit', label:'NIT', field:'nit', sortable:true},
+                {name:'celular', label:'Celular', field:'celular', sortable:true},
                 {name:'estado', label:'Estado', field:'estado', sortable:true},
-
                 ]
                     }
             },

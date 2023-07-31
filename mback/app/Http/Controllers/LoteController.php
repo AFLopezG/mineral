@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class LoteController extends Controller{
     public function index(){
-        return Lote::with(['cliente','cooperativa'])->get();
+        return Lote::with(['cliente','cooperativa'])->orderBy('id','desc')->get();
     }
 
     public function searchLote(Request $request){
@@ -19,9 +19,10 @@ class LoteController extends Controller{
 
     public function store(StoreLoteRequest $request){
         $cliente= Cliente::find($request->cliente_id);
-        $countMineral = Lote::where('mineral', $request->mineral)->count()+1;
+        $countMineral = Lote::where('mineral', $request->mineral)->whereYear('fecha', date('Y'))->count() + 1;
+        $countMineral = str_pad($countMineral, 3, '0', STR_PAD_LEFT);
         $cod= $request->mineral=='Plata'?'GM':($request->mineral=='Zinc'?'C':'B');
-        $codigo = $cod . '-' . $countMineral;
+        $codigo = $cod . '-' . $countMineral.'-'.date('y');
         $request->merge(['cooperativa_id' => $cliente->cooperativa_id]);
         $request->merge(['codigo' => $codigo]);
         $lote = Lote::create($request->all());

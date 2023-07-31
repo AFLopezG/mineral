@@ -53,8 +53,10 @@
     </q-table>
     <q-dialog v-model="loteDialog">
       <q-card style="width: 650px; max-width: 90vw; max-height: 90vh; overflow: auto;">
-        <q-card-section>
+        <q-card-section class="row items-center justify-between">
           <div class="text-h6">{{loteOption=='create'?'Registrar':'Editar'}} lote</div>
+          <q-space></q-space>
+          <q-btn icon="close" flat @click="loteDialog=false" />
         </q-card-section>
         <q-card-section class="q-pt-none">
         <q-form @submit="loteCreate">
@@ -169,6 +171,8 @@
               this.loteDialog=false
               this.loteAll()
               this.lote={}
+            }).catch((error)=>{
+              this.$alert.error(error.response.data.message)
             }).finally(()=>{
               this.loading=false
             })
