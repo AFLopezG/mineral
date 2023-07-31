@@ -22,23 +22,28 @@
                 </q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup @click="anticipoDelete (props.row)">
-                <q-item-section>
-                  <q-item-label>
-                      Eliminar
-                </q-item-label>
-                </q-item-section>
-              </q-item>
+<!--              <q-item clickable v-close-popup @click="anticipoDelete (props.row)">-->
+<!--                <q-item-section>-->
+<!--                  <q-item-label>-->
+<!--                      Eliminar-->
+<!--                </q-item-label>-->
+<!--                </q-item-section>-->
+<!--              </q-item>-->
             </q-list>
           </q-btn-dropdown>
         </q-td>
       </template>
         <template v-slot:body-cell-mineral="props">
           <q-td :props="props" >
-            <q-chip :label="props.row.mineral"
-                    :color="props.row.mineral=='Plata'?'grey-8':props.row.mineral=='Zinc'?'blue-8':props.row.mineral=='Plomo'?'green-8':''"
+            <q-chip :label="props.row.lote.mineral"
+                    :color="props.row.lote.mineral=='Plata'?'grey-8':props.row.lote.mineral=='Zinc'?'blue-8':props.row.lote.mineral=='Plomo'?'green-8':''"
                     text-color="white"
             />
+          </q-td>
+        </template>
+        <template v-slot:body-cell-monto="props">
+          <q-td :props="props" >
+            <b>{{props.row.monto}} Bs</b>
           </q-td>
         </template>
         <template v-slot:body-cell-tipo="props">
@@ -50,8 +55,9 @@
           </q-td>
         </template>
     </q-table>
+<!--      <pre>{{anticipos}}</pre>-->
     <q-dialog v-model="anticipoDialog">
-      <q-card style="width: 650px; max-width: 90vw; max-height: 90vh; overflow: auto;">
+      <q-card style="width: 800px; max-width: 90vw; max-height: 90vh; overflow: auto;">
         <q-card-section class="row items-center">
           <div class="text-h6">{{anticipoOption=='create'?'Registrar':'Editar'}} anticipo</div>
           <q-space></q-space>
@@ -60,10 +66,10 @@
         <q-card-section class="q-pt-none">
         <q-form @submit="anticipoCreate">
           <div class="row">
-            <div class="col-12 col-md-3">
-              <q-select outlined v-model="anticipo.tipo" label="Mineral" :options="['Lote','Transporte']"></q-select>
+            <div class="col-12 col-md-4">
+              <q-select outlined v-model="anticipo.tipo" label="Tipo" :options="['Lote','Transporte']" required></q-select>
             </div>
-            <div class="col-md-9"></div>
+            <div class="col-md-8"></div>
             <div class="col-12 col-md-4">
               <q-select outlined v-model="anticipo.lote_id" label="Lote" :options="lotes"
                         option-value="id" option-label="codigo" emit-value map-options @filter="filterFn" use-input input-debounce="0">
@@ -75,32 +81,46 @@
                   </q-item>
                 </template>
               </q-select>
-              <pre>{{anticipo.lote_id}}</pre>
-              <pre>{{loteSearch}}</pre>
+<!--              <pre>{{loteSearch}}</pre>-->
             </div>
             <div class="col-12 col-md-4">
-              <q-input required outlined v-model="anticipo.peso" label="Peso" type="number" step="0.01"></q-input>
+              <q-input required outlined v-model="loteSearch.peso" label="Peso" type="number" readonly></q-input>
             </div>
             <div class="col-12 col-md-4">
-              <q-input outlined v-model="anticipo.saco" label="Sacos" type="number"></q-input>
+              <q-input required outlined v-model="loteSearch.saco" label="Sacos" type="number" readonly></q-input>
+            </div>
+            <div class="col-12 col-md-4" style="height: 40px">
+              <b>Proveedor</b>
+              <div v-if="loteSearch.cliente">{{loteSearch.cliente.nombre}}</div>
+            </div>
+            <div class="col-12 col-md-4" style="height: 40px">
+              <b>Coopeativa</b>
+              <div v-if="loteSearch.cliente">{{loteSearch.cooperativa.nombre}}</div>
+            </div>
+            <div class="col-12 col-md-4" style="height: 40px">
+              <b>fecha</b>
+              <div>{{loteSearch.fecha}}</div>
             </div>
             <div class="col-12 col-md-4">
-              <q-select outlined v-model="anticipo.cliente_id" label="Proveedor" :options="lotes"
-                        option-value="id" option-label="nombre" emit-value map-options @filter="filterFn" use-input input-debounce="0">
-                <template v-slot:no-option>
-                  <q-item>
-                    <q-item-section class="text-grey">
-                      No hay resultados
-                    </q-item-section>
-                  </q-item>
-                </template>
-              </q-select>
+              <q-input required outlined v-model="anticipo.monto" label="Monto" type="number"></q-input>
             </div>
-            <div class="col-12 col-md-4">
-              <q-input outlined v-model="cooperativa" label="Cooperativa" readonly/>
+            <div class="col-12">
+              <div class="text-h6">Transporte</div>
             </div>
-            <div class="col-12 col-md-4">
-              <q-input outlined v-model="anticipo.fecha" label="Fecha" type="date"></q-input>
+            <div class="col-12 col-md-3">
+              <q-input outlined v-model="anticipo.nombreChofer" label="Nombre Chofer" type="text"></q-input>
+            </div>
+            <div class="col-12 col-md-3">
+              <q-input outlined v-model="anticipo.ciChofer" label="CI Chofer" type="text"></q-input>
+            </div>
+            <div class="col-12 col-md-3">
+              <q-input outlined v-model="anticipo.placa" label="Placa" type="text"></q-input>
+            </div>
+            <div class="col-12 col-md-3">
+              <q-input outlined v-model="anticipo.tipoVehiculo" label="Tipo Vehiculo" type="text"></q-input>
+            </div>
+            <div class="col-12">
+              <q-input outlined v-model="anticipo.descripcion" label="Descripcion" type="textarea"></q-input>
             </div>
           </div>
           <q-btn type="submit" class="full-width" :loading="loading" :color="anticipoOption=='create'?'green':'orange'" :label="anticipoOption=='create'?'Registrar':'Editar'" :icon="anticipoOption=='create'?'add_circle_outline':'edit'" no-caps/>
@@ -127,13 +147,14 @@
           anticipoDialog:false,
           anticipoColum:[
             {name:'opcion', label:'Opcion', field:'opcion', sortable:true},
-            {name:'codigo', label:'Codigo', field:'codigo', sortable:true},
-            {name:'mineral', label:'Mineral', field:'mineral', sortable:true},
-            {name:'tipo', label:'Tipo', field:'tipo', sortable:true},
-            {name:'peso', label:'Peso', field:'peso', sortable:true},
-            {name:'saco', label:'Sacos', field:'saco', sortable:true},
-            {name:'cliente', label:'Proveedor', field : row => row.cliente.nombre, sortable:true},
-            {name:'cooperativa', label:'Cooperativa', field: row => row.cooperativa.nombre, sortable:true},
+            {name:'monto', label:'Monto', field: 'monto', sortable:true},
+            {name:'fecha', label:'Fecha', field: row => date.formatDate(row.fecha, 'DD/MM/YYYY'), sortable:true},
+            {name:'descripcion', label:'Descripcion', field:'descripcion', sortable:true},
+            {name:'codigo', label:'Codigo', field: row => row.lote.codigo, sortable:true},
+            {name:'tipo', label:'Tipo', field: row => row.lote.tipo, sortable:true},
+            {name:'mineral', label:'Mineral', field: row => row.lote.mineral, sortable:true},
+            // {name:'cliente', label:'Proveedor', field : row => row.cliente.nombre, sortable:true},
+            // {name:'cooperativa', label:'Cooperativa', field: row => row.cooperativa.nombre, sortable:true},
           ],
         }
       },
@@ -149,10 +170,10 @@
           })
         },
         anticipoAgregar(){
+          this.lotes = this.lotesAll
           this.anticipoDialog=true
           this.anticipoOption='create'
-          this.anticipo.mineral='Plata'
-          this.anticipo.tipo='Concentrado'
+          this.anticipo.lote_id=''
           this.anticipo.fecha=date.formatDate(Date.now(),'YYYY-MM-DD')
         },
         filterFn (val, update) {
@@ -164,7 +185,7 @@
           }
           update(() => {
             const needle = val.toLowerCase()
-            this.lotes = this.lotesAll.filter(v => v.nombre.toLowerCase().indexOf(needle) > -1)
+            this.lotes = this.lotesAll.filter(v => v.codigo.toLowerCase().indexOf(needle) > -1)
           })
         },
         anticipoAll(){
@@ -184,6 +205,8 @@
               this.anticipo={}
             }).finally(()=>{
               this.loading=false
+            }).catch((error)=>{
+              this.$alert.error(error.response.data.message)
             })
           }else{
             this.$api.put('anticipo/'+this.anticipo.id , this.anticipo).then((response)=>{

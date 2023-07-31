@@ -24,7 +24,10 @@ class StoreAnticipoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'tipo' => ['required', 'string', 'max:255'],
+            'lote_id' => ['required', 'integer'],
+            'monto' => ['required', 'numeric'],
+            'fecha' => ['required', 'date'],
         ];
     }
 }

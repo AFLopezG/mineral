@@ -8,10 +8,10 @@ use App\Http\Requests\UpdateAnticipoRequest;
 
 class AnticipoController extends Controller{
     public function index(){
-        return Anticipo::with(['lote'])->get();
+        return Anticipo::with(['lote'])->orderBy('id','desc')->get();
     }
     public function store(StoreAnticipoRequest $request){
-        $anticipo = Anticipo::create($request->validated());
+        $anticipo = Anticipo::create($request->all());
         return $anticipo;
     }
     public function show(Anticipo $anticipo){

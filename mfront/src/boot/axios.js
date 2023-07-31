@@ -1,6 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 import {Alert} from "src/addons/Alert";
+import {Pdf} from "src/addons/Pdf";
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -15,6 +16,7 @@ export default boot(({ app }) => {
 
   app.config.globalProperties.$axios = axios
   app.config.globalProperties.$alert = Alert
+  app.config.globalProperties.$pdf = Pdf
   app.config.globalProperties.$minerales = ['Plata','Zinc','Plomo']
   app.config.globalProperties.$tipos = ['Concentrado','Broza']
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)

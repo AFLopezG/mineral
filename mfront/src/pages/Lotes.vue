@@ -116,7 +116,8 @@
           loteDialog:false,
           loteColum:[
             {name:'opcion', label:'Opcion', field:'opcion', sortable:true},
-            {name:'codigo', label:'Codigo', field:'codigo', sortable:true},
+            {name:'codigo', label:'Codigo', field:'codigo', sortable:true, align:'left'},
+            {name:'fecha', label:'Fecha', field:'fecha', sortable:true, align:'left'},
             {name:'mineral', label:'Mineral', field:'mineral', sortable:true},
             {name:'tipo', label:'Tipo', field:'tipo', sortable:true},
             {name:'peso', label:'Peso', field:'peso', sortable:true},
