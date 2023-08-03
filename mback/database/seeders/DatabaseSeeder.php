@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CooperativaSeeder::class,
             ClienteSeeder::class,
+            DiariaSeeder::class,
+            QuincenaSeeder::class,
 //            LoteSeeder::class,
 //            AgprecioSeeder::class,
 //            UserSeeder::class,

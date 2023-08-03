@@ -27,9 +27,9 @@ class QuincenaController extends Controller
         $mes= date("m", $timestamp);
         $an= date("Y", $timestamp);
         if($dia>=1 && $dia<=15)
-            return Quincena::whereDate('fecha','>=',$an.'-'.$mes.'-1')->whereDate('fecha','<=',$an.'-'.$mes.'-15')-first();
+            return Quincena::whereDate('fecha','>=',$an.'-'.$mes.'-1')->whereDate('fecha','<=',$an.'-'.$mes.'-15')->first();
         else
-            return Quincena::whereDate('fecha','>=',$an.'-'.$mes.'-16')->whereDate('fecha','<=',$an.'-'.$mes.'-31')-first();
+            return Quincena::whereDate('fecha','>=',$an.'-'.$mes.'-16')->whereDate('fecha','<=',$an.'-'.$mes.'-31')->first();
 
     }
 

@@ -10,10 +10,10 @@
         <q-card class="my-card">
             <q-card-section>
                 <div class="row">
-              <div class="col-6"><q-input dense outlined v-model="zinc" label="Ley Zinc Zn" /></div>
-              <div class="col-6"><q-input dense outlined v-model="plomo" label="Ley Plomo Pb" /></div>
-              <div class="col-6"><q-input dense outlined v-model="plata" label="Ley Plata Ag" /></div>
-              <div class="col-6"><q-input dense outlined v-model="humedad" label="Humedad %" @keydown="calculoPesoNeto"/></div></div>
+              <div class="col-6"><q-input dense outlined v-model="zinc" label="Ley Zinc Zn" @keyup="calculoValoracion"/></div>
+              <div class="col-6"><q-input dense outlined v-model="plomo" label="Ley Plomo Pb" @keyup="calculoValoracion"/></div>
+              <div class="col-6"><q-input dense outlined v-model="plata" label="Ley Plata Ag" @keyup="calculoValoracion"/></div>
+              <div class="col-6"><q-input dense outlined v-model="humedad" label="Humedad %" @keyup="calculoPesoNeto"/></div></div>
             </q-card-section>
           </q-card>
           <q-card-section v-if="lote.id!=undefined">
@@ -25,7 +25,8 @@
             <div class="col-4"><q-input dense outlined v-model="lote.saco" label="Sacos" /></div>
             <div class="col-4"><q-input dense outlined v-model="lote.fecha" label="Fecha" /></div>
             <div class="col-4"><q-select dense outlined v-model="tara" label="Tara" :options="[0,1]" @update:model-value="calculoPesoNeto"/></div>
-            <div class="col-4"><q-input dense outlined v-model="pesoNeto" label="Peso Neto" type="number "/></div>
+            <div class="col-4"><q-badge color="orange" text-color="black" style="width:200px; height:40px; font-size:14px; " label="PESO NETO: ">{{pesoNeto}}</q-badge></div>
+            <!--<q-input dense color="green" outlined v-model="pesoNeto" label="Peso Neto" type="number "/>-->
            </div>
           </q-card-section>
           <q-card-section>
@@ -39,16 +40,16 @@
             <div class="row">
                 <did class="col-3"><q-input dense outlined v-model="valAg" label="valoracion Ag" /></did>
                 <did class="col-3"><q-input dense outlined v-model="decAg" label="Deduccion Ag" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Parcial Ag" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Pagable Ag" /></did>
+                <did class="col-3"><q-input dense outlined v-model="parAg" label="Parcial Ag" /></did>
+                <did class="col-3"><q-input dense outlined v-model="pagAg" label="Pagable Ag" /></did>
                 <did class="col-3"><q-input dense outlined v-model="valZn" label="valoracion Zn" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Deduccion Zn" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Parcial Zn" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Pagable Zn" /></did>
+                <did class="col-3"><q-input dense outlined v-model="decZn" label="Deduccion Zn" /></did>
+                <did class="col-3"><q-input dense outlined v-model="parZn" label="Parcial Zn" /></did>
+                <did class="col-3"><q-input dense outlined v-model="pagZn" label="Pagable Zn" /></did>
                 <did class="col-3"><q-input dense outlined v-model="valPb" label="valoracion Pb" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Deduccion Pb" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Parcial Pb" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Pagable Pb" /></did>
+                <did class="col-3"><q-input dense outlined v-model="decPb" label="Deduccion Pb" /></did>
+                <did class="col-3"><q-input dense outlined v-model="parPb" label="Parcial Pb" /></did>
+                <did class="col-3"><q-input dense outlined v-model="pagPb" label="Pagable Pb" /></did>
             </div>
         </q-card-section> 
     </q-page>
@@ -72,18 +73,21 @@
           regaliaZn:0,
           regaliaPb:0,
           valAg:0,
-          valzn:0,
-          valpb:0,
+          valZn:0,
+          valPb:0,
           quicena:{}
         }
+    },
+    created(){
     },
     methods:{
         buscarQuin(fec){
                 this.quicena={}
             this.$api.post('buscarQuincena',{'fecha':fec}).then((response)=>{
+                console.log(response.data)
 
-                this.quicena=response.data
-                if(this.quicena.id==undefined)
+                this.quincena=response.data
+                if(this.quincena.id==undefined)
                 this.$q.notify({
                     message: 'No existe Quincena',
                     color: 'red',
@@ -102,17 +106,17 @@
         })
         },
         calculoPesoNeto(){
-            this.pesoNeto=this.lote.peso * (100 -  this.humedad) - (this.lote.saco/2) - (this.lote.peso * this.tara)
+            this.pesoNeto=this.lote.peso * (100 -  this.humedad)/100 - (this.lote.saco/2) - (this.lote.peso * this.tara/100)
         },
 
         calculoValoracion(){
             this.valAg=this.plata * 100 / 31.1035
-            this.valpb=this.plomo
-            this.valzn=this.zinc
+            this.valPb=this.plomo
+            this.valZn=this.zinc
 
-            this.regaliaAg= (this.plata * this.pesoNeto/1000) * this.quincena.plata
-            this.regaliaPb= this.pesoNeto * this.plomo * 2.2046223 * this.quicena.plomo
-            this.regaliaZn= this.pesoNeto * this.zinc * 2.2046223 * this.quicena.zinc
+            this.regaliaAg= (this.valAg * this.pesoNeto / 1000) * this.quincena.plata
+            this.regaliaPb= this.pesoNeto * this.plomo * 2.2046223 * this.quincena.plomo
+            this.regaliaZn= this.pesoNeto * this.zinc * 2.2046223 * this.quincena.zinc
         }
     }
     
