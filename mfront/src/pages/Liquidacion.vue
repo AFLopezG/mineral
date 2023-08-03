@@ -39,17 +39,17 @@
         <q-card-section>
             <div class="row">
                 <did class="col-3"><q-input dense outlined v-model="valAg" label="valoracion Ag" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Deduccion Ag" /></did>
+                <did class="col-3"><q-input dense outlined v-model="decAg" label="Deduccion Ag" @keyup="calculoParcialAg" type="number" step="0.01"/></did>
+                <did class="col-3"><q-input dense outlined v-model="pagAg" label="Pagable Ag" @keyup="calculoParcialAg" type="number"/></did>
                 <did class="col-3"><q-input dense outlined v-model="parAg" label="Parcial Ag" /></did>
-                <did class="col-3"><q-input dense outlined v-model="pagAg" label="Pagable Ag" /></did>
                 <did class="col-3"><q-input dense outlined v-model="valZn" label="valoracion Zn" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decZn" label="Deduccion Zn" /></did>
+                <did class="col-3"><q-input dense outlined v-model="decZn" label="Deduccion Zn" @keyup="calculoParcialZn" type="number" step="0.01"/></did>
+                <did class="col-3"><q-input dense outlined v-model="pagZn" label="Pagable Zn" @keyup="calculoParcialZn" type="number"/></did>
                 <did class="col-3"><q-input dense outlined v-model="parZn" label="Parcial Zn" /></did>
-                <did class="col-3"><q-input dense outlined v-model="pagZn" label="Pagable Zn" /></did>
                 <did class="col-3"><q-input dense outlined v-model="valPb" label="valoracion Pb" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decPb" label="Deduccion Pb" /></did>
+                <did class="col-3"><q-input dense outlined v-model="decPb" label="Deduccion Pb" @keyup="calculoParcialPb" type="number" step="0.01"/></did>
+                <did class="col-3"><q-input dense outlined v-model="pagPb" label="Pagable Pb" @keyup="calculoParcialPb" type="number"/></did>
                 <did class="col-3"><q-input dense outlined v-model="parPb" label="Parcial Pb" /></did>
-                <did class="col-3"><q-input dense outlined v-model="pagPb" label="Pagable Pb" /></did>
             </div>
         </q-card-section> 
     </q-page>
@@ -75,7 +75,16 @@
           valAg:0,
           valZn:0,
           valPb:0,
-          quicena:{}
+          decAg:0,
+          decZn:0,
+          decPb:0,
+          pagAg:0,
+          pagZn:0,
+          pagPb:0,
+          parAg:0,
+          parZn:0,
+          parPb:0,
+          quincena:{}
         }
     },
     created(){
@@ -117,6 +126,18 @@
             this.regaliaAg= (this.valAg * this.pesoNeto / 1000) * this.quincena.plata
             this.regaliaPb= this.pesoNeto * this.plomo * 2.2046223 * this.quincena.plomo
             this.regaliaZn= this.pesoNeto * this.zinc * 2.2046223 * this.quincena.zinc
+        },
+        calculoParcialAg(){
+            if(this.pagAg<=0) this.pagAg=100
+            this.parAg = (this.valAg - this.decAg) * this.pagAg / 100
+        },
+        calculoParcialZn(){
+            if(this.pagZn<=0) this.pagZn=100
+            this.parZn = (this.valZn - this.decZn) * this.pagZn / 100
+        },
+        calculoParcialPb(){
+            if(this.pagPb<=0) this.pagPb=100
+            this.parPb = (this.valPb - this.decPb) * this.pagPb / 100
         }
     }
     
