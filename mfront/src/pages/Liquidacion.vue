@@ -51,18 +51,41 @@
                 <did class="col-3"><q-input dense outlined v-model="pagPb" label="Pagable Pb" @keyup="calculoParcialPb" type="number"/></did>
                 <did class="col-3"><q-input dense outlined v-model="parPb" label="Parcial Pb" /></did>
             </div>
+            <div><b>TOTAL</b> {{totalParcial}}</div>
         </q-card-section> 
-    </q-page>
+        <q-card-section>
+            <div class="row">
+                <div class="col-12"><q-input dense outlined v-model="maquila" label="Maquila" type="number"/></div>
+            <did class="col-4"><q-input dense outlined v-model="base" label="Base" /></did>
+            <did class="col-4"><q-input dense outlined v-model="actual" label="Actual" /></did>
+            <did class="col-4"><q-input dense outlined v-model="diff" label="Total" /></did>
+            <did class="col-4"><q-input dense outlined v-model="penalidad" label="Penalidad" /></did>
+            <did class="col-4"><q-input dense outlined v-model="CalculoDesc" label="Descuento Base" /></did>
+        </div>        
+        </q-card-section>
+        <q-card-section>
+            <div>Refinacion de Ag</div>
+            <div class="row">
+                <div class="col-4">{{regaliaAg}}</div>
+                <div class="col-4"><q-input dense outlined v-model="refinacion" label="Gasto Refinacion" type="number"/></div>
+                <div class="col-4">{{calculoRefinacion}}</div>
+            </div>
+        </q-card-section>
+        </q-page>
 </template>
 <script>
-  import {date} from 'quasar'
+  import { relativeTimeThreshold } from 'moment'
+import {date} from 'quasar'
+import { computed } from 'vue'
     export default{
       name: 'LiquidPage',
       data () {
         return{
           loading: false,
           pesoNeto:0,
+          refinacion:0,
           codigolote:'',
+          penalidad:0,
           lote:{},
           zinc:0,
           plomo:0,
@@ -84,6 +107,9 @@
           parAg:0,
           parZn:0,
           parPb:0,
+          base:0,
+          maquila:0,
+          actual:0,
           quincena:{}
         }
     },
@@ -134,10 +160,37 @@
         calculoParcialZn(){
             if(this.pagZn<=0) this.pagZn=100
             this.parZn = (this.valZn - this.decZn) * this.pagZn / 100
+            if(this.regaliaZn>0) this.actual = this.regaliaZn
         },
         calculoParcialPb(){
             if(this.pagPb<=0) this.pagPb=100
             this.parPb = (this.valPb - this.decPb) * this.pagPb / 100
+            if(this.regaliaPb>0) this.actual = this.regaliaPb
+        }
+    },
+    computed:{
+        totalParcial() {
+            return this.parAg + this.parPb + this.parZn
+        },
+        diff(){
+            return this.actual - this.base
+        },
+        CalculoDesc(){
+            if( this.penalidad==0)
+            return this.actual - this.base
+        else return (this.actual - this.base ) * this.penalidad
+        },
+        calculoRefinacion(){
+            return this.regaliaAg * this.refinacion
+        }, 
+        totalDescuento(){
+            return this.maquila + this.calculoRefinacion + this.CalculoDesc
+        },
+        totalPagable(){
+            return this.totalParcial - this.totalDescuento
+        },
+        totalBruto(){
+            return this.totalPagable * this.pesoNeto / 1000
         }
     }
     
