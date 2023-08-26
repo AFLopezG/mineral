@@ -2,7 +2,7 @@
     <q-page>
         <div>LIQUIDACION</div>
         <div>LEYES LABORATORIO</div>
-        <div class="row">
+        <div class="row q-pd-xs">
             <div class="col-3"><q-input outlined dense label="Lote" v-model="codigolote"/></div>
             <div class="col-1"> <q-btn color="info" icon="search" @click="buscarlote"/>
             </div>
@@ -206,9 +206,13 @@ import { computed } from 'vue'
         else return (this.actual - this.base ) * this.penalidad
         },
         calculoRefinacion(){
-            return this.regaliaAg * this.refinacion
+            if(this.refinacion>0)
+                return this.regaliaAg * this.refinacion
+            else
+            return this.regaliaAg
         }, 
         totalDescuento(){
+            //if(isNaN(this.maquila)) this.maquila=0
             return this.maquila + this.calculoRefinacion + this.CalculoDesc
         },
         totalPagable(){
@@ -219,6 +223,9 @@ import { computed } from 'vue'
         },
         totalTransporte(){
             return this.anticipo
+        },
+        valorNeto(){
+            return this.totalBruto - this.totalTransporte - this.rollback - this.molienda
         }
     }
     
