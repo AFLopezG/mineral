@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anticipo;
 use App\Http\Requests\StoreAnticipoRequest;
 use App\Http\Requests\UpdateAnticipoRequest;
+use Illuminate\Http\Request;
 
 class AnticipoController extends Controller{
     public function index(){
@@ -24,5 +25,9 @@ class AnticipoController extends Controller{
     public function destroy(Anticipo $anticipo){
         $anticipo->delete();
         return $anticipo;
+    }
+
+    public function totalAnticipo(Request $request){
+        return Anticipo::where('lote_id',$request->id)->get();
     }
 }

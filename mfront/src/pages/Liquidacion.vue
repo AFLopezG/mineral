@@ -70,6 +70,18 @@
                 <div class="col-4"><q-input dense outlined v-model="refinacion" label="Gasto Refinacion" type="number"/></div>
                 <div class="col-4">{{calculoRefinacion}}</div>
             </div>
+            <div class="row">
+                <div class="col-4">Total Anticipo: {{anticipo}}</div>
+                <div class="col-4">{{totalTransporte}}</div>
+            </div>
+            <div class="row">
+                <div class="col-4">RollBack</div>
+                <div class="col-4"><q-input dense outlined type="number" v-model="rollback"  /></div>
+            </div>
+            <div class="row">
+                <div class="col-4">Molienda</div>
+                <div class="col-4"><q-input dense outlined type="number" v-model="molienda"  /></div>
+            </div>
         </q-card-section>
         </q-page>
 </template>
@@ -81,7 +93,9 @@ import { computed } from 'vue'
       name: 'LiquidPage',
       data () {
         return{
-          loading: false,
+            rollback:0,
+            molienda:0,
+            loading: false,
           pesoNeto:0,
           refinacion:0,
           codigolote:'',
@@ -110,12 +124,22 @@ import { computed } from 'vue'
           base:0,
           maquila:0,
           actual:0,
-          quincena:{}
+          quincena:{},
+          anticipo:0
         }
     },
     created(){
     },
     methods:{
+        calculoAnticipo(){
+            this.anticipo=0
+            this.$api.post('totalAnticipo',{'id':this.lote.id}).then((response)=>{
+                console.log(response.data)
+                response.data.forEach(r => {
+                    this.anticipo+=r.monto
+                });
+            })
+        },
         buscarQuin(fec){
                 this.quicena={}
             this.$api.post('buscarQuincena',{'fecha':fec}).then((response)=>{
@@ -138,6 +162,7 @@ import { computed } from 'vue'
                 this.lote=response.data
                 this.calculoPesoNeto()
                 this.buscarQuin(this.lote.fecha)
+                this.calculoAnticipo()
         })
         },
         calculoPesoNeto(){
@@ -191,6 +216,9 @@ import { computed } from 'vue'
         },
         totalBruto(){
             return this.totalPagable * this.pesoNeto / 1000
+        },
+        totalTransporte(){
+            return this.anticipo
         }
     }
     
