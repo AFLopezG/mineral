@@ -1,78 +1,73 @@
 <template>
-    <q-page>
-        <div>LIQUIDACION</div>
-        <div>LEYES LABORATORIO</div>
-        <div class="row q-pd-xs">
-            <div class="col-3"><q-input outlined dense label="Lote" v-model="codigolote"/></div>
-            <div class="col-1"> <q-btn color="info" icon="search" @click="buscarlote"/>
-            </div>
+    <q-page class="q-pa-xs">
+        <center class="text-h5">LEYES LABORATORIO</center>
+        <div class="row q-pa-xs">
+            <div class="col-3"><q-select dense outlined v-model="lote" :options="lotes" label="Codigo de Lote" /></div>
         </div>
         <q-card class="my-card">
             <q-card-section>
                 <div class="row">
-              <div class="col-6"><q-input dense outlined v-model="zinc" label="Ley Zinc Zn" @keyup="calculoValoracion"/></div>
-              <div class="col-6"><q-input dense outlined v-model="plomo" label="Ley Plomo Pb" @keyup="calculoValoracion"/></div>
-              <div class="col-6"><q-input dense outlined v-model="plata" label="Ley Plata Ag" @keyup="calculoValoracion"/></div>
-              <div class="col-6"><q-input dense outlined v-model="humedad" label="Humedad %" @keyup="calculoPesoNeto"/></div></div>
+                <div class="col-6">
+              <div class="col-6 q-pa-xs"><q-input dense outlined v-model="zinc" label="Ley Zinc Zn" type="number" step="0.01" @keyup="calculoValoracion"/></div>
+              <div class="col-6 q-pa-xs"><q-input dense outlined v-model="plomo" label="Ley Plomo Pb" type="number" step="0.01" @keyup="calculoValoracion"/></div>
+              <div class="col-6 q-pa-xs"><q-input dense outlined v-model="plata" label="Ley Plata Ag" type="number" step="0.01" @keyup="calculoValoracion"/></div>
+              <div class="col-6 q-pa-xs"><q-input dense outlined v-model="humedad" label="Humedad %" type="number"/></div></div>
+              <div class="col-6 q-pa-xs">
+                <div class="row " v-if="lote.id!=undefined">
+                    <div class="col-6"><b>MINERAL: </b>{{lote.mineral}}</div>
+                    <div class="col-6"><b>COOPERATIVA: </b> {{lote.cooperativa.nombre}}  </div>
+                    <div class="col-6"><b>CLIENTE: </b>  {{lote.cliente.nombre}}  </div>
+                    <div class="col-6"><b>PESO: </b> {{lote.peso}}  </div>
+                    <div class="col-6"><b>SACO: </b> {{lote.saco}}  </div>
+                    <div class="col-6"><b>FECHA: </b> {{lote.fecha}}  </div>
+                    <div class="col-4"><b>TARA:</b> <q-toggle v-model="tara" :true-value="1" :false-value="0"/>                     </div>
+                    <div class="col-12"><q-badge color="orange" text-color="black" style="width:200px; height:40px; font-size:14px; " label="PESO NETO: ">{{calculoPesoNeto}}</q-badge></div>
+                    <!--<q-input dense color="green" outlined v-model="pesoNeto" label="Peso Neto" type="number "/>-->
+                   </div>
+              </div>
+            </div>
             </q-card-section>
           </q-card>
-          <q-card-section v-if="lote.id!=undefined">
-            <div class="row">
-            <div class="col-4"><q-input dense outlined v-model="lote.mineral" label="Mineral" /></div>
-            <div class="col-4"><q-input dense outlined v-model="lote.cooperativa.nombre" label="Cooperativa" /></div>
-            <div class="col-4"><q-input dense outlined v-model="lote.cliente.nombre" label="Proveedor" /></div>
-            <div class="col-4"><q-input dense outlined v-model="lote.peso" label="Peso" /></div>
-            <div class="col-4"><q-input dense outlined v-model="lote.saco" label="Sacos" /></div>
-            <div class="col-4"><q-input dense outlined v-model="lote.fecha" label="Fecha" /></div>
-            <div class="col-4"><q-select dense outlined v-model="tara" label="Tara" :options="[0,1]" @update:model-value="calculoPesoNeto"/></div>
-            <div class="col-4"><q-badge color="orange" text-color="black" style="width:200px; height:40px; font-size:14px; " label="PESO NETO: ">{{pesoNeto}}</q-badge></div>
-            <!--<q-input dense color="green" outlined v-model="pesoNeto" label="Peso Neto" type="number "/>-->
-           </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-                <did class="col-6"><q-input dense outlined v-model="regaliaAg" label="Regalia Ag" /></did>
-                <did class="col-6"><q-input dense outlined v-model="regaliaZn" label="Regalia Zn" /></did>
-                <did class="col-6"><q-input dense outlined v-model="regaliaPb" label="Regalia Pb" /></did>
-            </div>
-        </q-card-section>
+        <center class="text-h5">LIQUIDACION</center>
+
         <q-card-section>
             <div class="row">
-                <did class="col-3"><q-input dense outlined v-model="valAg" label="valoracion Ag" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decAg" label="Deduccion Ag" @keyup="calculoParcialAg" type="number" step="0.01"/></did>
-                <did class="col-3"><q-input dense outlined v-model="pagAg" label="Pagable Ag" @keyup="calculoParcialAg" type="number"/></did>
-                <did class="col-3"><q-input dense outlined v-model="parAg" label="Parcial Ag" /></did>
-                <did class="col-3"><q-input dense outlined v-model="valZn" label="valoracion Zn" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decZn" label="Deduccion Zn" @keyup="calculoParcialZn" type="number" step="0.01"/></did>
-                <did class="col-3"><q-input dense outlined v-model="pagZn" label="Pagable Zn" @keyup="calculoParcialZn" type="number"/></did>
-                <did class="col-3"><q-input dense outlined v-model="parZn" label="Parcial Zn" /></did>
-                <did class="col-3"><q-input dense outlined v-model="valPb" label="valoracion Pb" /></did>
-                <did class="col-3"><q-input dense outlined v-model="decPb" label="Deduccion Pb" @keyup="calculoParcialPb" type="number" step="0.01"/></did>
-                <did class="col-3"><q-input dense outlined v-model="pagPb" label="Pagable Pb" @keyup="calculoParcialPb" type="number"/></did>
-                <did class="col-3"><q-input dense outlined v-model="parPb" label="Parcial Pb" /></did>
+                <div class="col-3 q-pa-xs "> <b>valoracion Ag :</b> {{valAg}} </div>
+                <div class="col-3 q-pa-xs "><q-input dense outlined v-model="decAg" label="Deduccion Ag" @keyup="calculoParcialAg" type="number" step="0.01"/></div>
+                <div class="col-3 q-pa-xs "><q-input dense outlined v-model="pagAg" label="Pagable Ag%" @keyup="calculoParcialAg" type="number"/></div>
+                <div class="col-3 q-pa-xs "><b>Parcial Ag: </b> {{parAg}}  </div>
+                <div class="col-3 q-pa-xs "><b>valoracion Zn :  </b> {{valZn}} </div>
+                <div class="col-3 q-pa-xs "><q-input dense outlined v-model="decZn" label="Deduccion Zn" @keyup="calculoParcialZn" type="number" step="0.01"/></div>
+                <div class="col-3 q-pa-xs "><q-input dense outlined v-model="pagZn" label="Pagable Zn" @keyup="calculoParcialZn" type="number"/></div>
+                <div class="col-3 q-pa-xs "><b>Parcial Zn: </b> {{parZn}}</div>
+
+                <div class="col-3 q-pa-xs "><b> valoracion Pb: </b> {{valPb}}</div>
+                <div class="col-3 q-pa-xs "><q-input dense outlined v-model="decPb" label="Deduccion Pb" @keyup="calculoParcialPb" type="number" step="0.01"/></div>
+                <div class="col-3 q-pa-xs "><q-input dense outlined v-model="pagPb" label="Pagable Pb" @keyup="calculoParcialPb" type="number"/></div>
+                <div class="col-3 q-pa-xs "><b>Parcial Pb: </b> {{parPb}}</div>
             </div>
             <div><b>TOTAL</b> {{totalParcial}}</div>
         </q-card-section> 
         <q-card-section>
             <div class="row">
                 <div class="col-12"><q-input dense outlined v-model="maquila" label="Maquila" type="number"/></div>
-            <did class="col-4"><q-input dense outlined v-model="base" label="Base" /></did>
-            <did class="col-4"><q-input dense outlined v-model="actual" label="Actual" /></did>
-            <did class="col-4"><q-input dense outlined v-model="diff" label="Total" /></did>
-            <did class="col-4"><q-input dense outlined v-model="penalidad" label="Penalidad" /></did>
-            <did class="col-4"><q-input dense outlined v-model="CalculoDesc" label="Descuento Base" /></did>
+            <div class="col-4"><q-input dense outlined v-model="base" label="Base" /></div>
+            <div class="col-4"><b>ACTUAL: </b>{{actual}} </div>
+            <div class="col-4"><b>TOTAL: </b> {{totaldiff}} </div>
+            <div class="col-4"><q-input dense outlined v-model="penalidad" label="Penalidad" /></div>
+            <div class="col-4"><b>DESCUENTO BASE</b> {{calculoDesc}} </div>
         </div>        
         </q-card-section>
         <q-card-section>
-            <div>Refinacion de Ag</div>
             <div class="row">
-                <div class="col-4">{{regaliaAg}}</div>
+                <div class="col-4">Refinacion de Ag: {{regaliaAg}}</div>
                 <div class="col-4"><q-input dense outlined v-model="refinacion" label="Gasto Refinacion" type="number"/></div>
-                <div class="col-4">{{calculoRefinacion}}</div>
+                <div class="col-4"><b>Gasto de Refinacion: </b>{{calculoRefinacion}}</div>
             </div>
             <div class="row">
                 <div class="col-4">Total Anticipo: {{anticipo}}</div>
-                <div class="col-4">{{totalTransporte}}</div>
+                <div class="col-4"><q-input dense outlined v-model="transporte" label="Transporte" type="number"/></div>
+                <div class="col-4">Total Transporte: {{totalTransporte}}</div>
             </div>
             <div class="row">
                 <div class="col-4">RollBack</div>
@@ -82,6 +77,8 @@
                 <div class="col-4">Molienda</div>
                 <div class="col-4"><q-input dense outlined type="number" v-model="molienda"  /></div>
             </div>
+            <div><b>VALOR PAGABLE:</b>{{totalPagable}}</div>
+            <div><b>VALOR BRUTO:</b>{{totalBruto}}</div>
         </q-card-section>
         </q-page>
 </template>
@@ -96,11 +93,12 @@ import { computed } from 'vue'
             rollback:0,
             molienda:0,
             loading: false,
-          pesoNeto:0,
+            transporte:0,
+          //pesoNeto:0,
           refinacion:0,
           codigolote:'',
           penalidad:0,
-          lote:{},
+          lote:{label:''},
           zinc:0,
           plomo:0,
           plata:0,
@@ -125,19 +123,32 @@ import { computed } from 'vue'
           maquila:0,
           actual:0,
           quincena:{},
-          anticipo:0
+          anticipo:0,
+          lotes:[],
+          loteFilter:[],
         }
     },
     created(){
+        this.cargarLote()
     },
     methods:{
+        cargarLote(){
+            this.lotes=[]
+            this.$api.get('lote').then((response)=>{
+                response.data.forEach(r => {
+                    r.label=r.codigo
+                    this.lotes.push(r)
+                })                
+                this.loteFilter=this.lotes
+            })
+        },
         calculoAnticipo(){
             this.anticipo=0
             this.$api.post('totalAnticipo',{'id':this.lote.id}).then((response)=>{
                 console.log(response.data)
                 response.data.forEach(r => {
                     this.anticipo+=r.monto
-                });
+                })
             })
         },
         buscarQuin(fec){
@@ -160,74 +171,97 @@ import { computed } from 'vue'
             this.$api.post('searchLote',{codigo:this.codigolote}).then((response)=>{
                 console.log(response.data)
                 this.lote=response.data
-                this.calculoPesoNeto()
                 this.buscarQuin(this.lote.fecha)
                 this.calculoAnticipo()
         })
         },
-        calculoPesoNeto(){
-            this.pesoNeto=this.lote.peso * (100 -  this.humedad)/100 - (this.lote.saco/2) - (this.lote.peso * this.tara/100)
-        },
 
         calculoValoracion(){
+            this.buscarQuin(this.lote.fecha)
+            this.calculoAnticipo()
+            this.actual=0
             this.valAg=this.plata * 100 / 31.1035
             this.valPb=this.plomo
             this.valZn=this.zinc
+            this.calculoParcialAg
+            this.calculoParcialPb
+            this.calculoParcialZn
 
-            this.regaliaAg= (this.valAg * this.pesoNeto / 1000) * this.quincena.plata
-            this.regaliaPb= this.pesoNeto * this.plomo * 2.2046223 * this.quincena.plomo
-            this.regaliaZn= this.pesoNeto * this.zinc * 2.2046223 * this.quincena.zinc
+            this.regaliaAg= (this.valAg * this.calculoPesoNeto / 1000) * this.quincena.plata
+            this.regaliaPb= this.calculoPesoNeto * this.plomo * 2.2046223 * this.quincena.plomo
+            this.regaliaZn= this.calculoPesoNeto * this.zinc * 2.2046223 * this.quincena.zinc
+            console.log(this.regaliaZn)
+            console.log(this.calculoPesoNeto)
+            console.log(this.zinc)
+            console.log(this.quincena.zinc)
+
         },
         calculoParcialAg(){
-            if(this.pagAg<=0) this.pagAg=100
-            this.parAg = (this.valAg - this.decAg) * this.pagAg / 100
+            //if(this.pagAg<=0) this.pagAg=100
+            this.parAg = ((this.valAg - this.decAg) * (this.pagAg<=0||this.pagAg>100?100:this.pagAg ) / 100).toFixed(2)
         },
         calculoParcialZn(){
-            if(this.pagZn<=0) this.pagZn=100
-            this.parZn = (this.valZn - this.decZn) * this.pagZn / 100
-            if(this.regaliaZn>0) this.actual = this.regaliaZn
+            //if(this.pagZn<=0) this.pagZn=100
+            if(parseFloat(this.regaliaZn)>0) this.actual = this.regaliaZn
+            this.parZn = ((this.valZn - this.decZn) * (this.pagZn<=0||this.pagZn>100?100:this.pagZn ) / 100).toFixed(2)
         },
         calculoParcialPb(){
-            if(this.pagPb<=0) this.pagPb=100
-            this.parPb = (this.valPb - this.decPb) * this.pagPb / 100
-            if(this.regaliaPb>0) this.actual = this.regaliaPb
+            //if(this.pagPb<=0) this.pagPb=100
+            if(parseFloat(this.regaliaPb)>0) this.actual = this.regaliaPb
+            this.parPb = ((this. valPb - this.decPb) * (this.pagPb<=0||this.pagPb>100?100:this.pagPb )/ 100).toFixed(2)
         }
     },
     computed:{
+        calculoPesoNeto(){
+            return this.lote.peso * (100 -  this.humedad)/100 - (this.lote.saco/2) - (this.lote.peso * this.tara/100)
+       },
         totalParcial() {
-            return this.parAg + this.parPb + this.parZn
+            return parseFloat(this.parAg) + parseFloat(this.parPb) + parseFloat(this.parZn)
         },
-        diff(){
+        totaldiff(){
             return this.actual - this.base
         },
-        CalculoDesc(){
+        calculoDesc(){
             if( this.penalidad==0)
             return this.actual - this.base
         else return (this.actual - this.base ) * this.penalidad
         },
         calculoRefinacion(){
             if(this.refinacion>0)
-                return this.regaliaAg * this.refinacion
+                return parseFloat(this.regaliaAg) + parseFloat(this.refinacion)
             else
-            return this.regaliaAg
+            return parseFloat(this.regaliaAg)
         }, 
         totalDescuento(){
             //if(isNaN(this.maquila)) this.maquila=0
-            return this.maquila + this.calculoRefinacion + this.CalculoDesc
+            return parseFloat(this.maquila) + parseFloat(this.calculoRefinacion) + parseFloat(this.calculoDesc)
         },
         totalPagable(){
-            return this.totalParcial - this.totalDescuento
+            return parseFloat(this.totalParcial) - parseFloat(this.totalDescuento)
         },
         totalBruto(){
-            return this.totalPagable * this.pesoNeto / 1000
+            return parseFloat(this.totalPagable) * parseFloat(this.calculoPesoNeto) / 1000
         },
         totalTransporte(){
-            return this.anticipo
+            return parseFloat(this.anticipo) + parseFloat(this.transporte)
         },
-        valorNeto(){
-            return this.totalBruto - this.totalTransporte - this.rollback - this.molienda
-        }
+
+
+    
     }
     
 }
 </script>
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
