@@ -56,7 +56,9 @@
             <div class="col-4"><b>TOTAL: </b> {{totaldiff}} </div>
             <div class="col-4"><q-input dense outlined v-model="penalidad" label="Penalidad" /></div>
             <div class="col-4"><b>DESCUENTO BASE</b> {{calculoDesc}} </div>
-        </div>        
+        </div>     
+        <div><b>VALOR PAGABLE:</b>{{totalPagable}}</div>
+        <div><b>VALOR BRUTO:</b>{{totalBruto}}</div>   
         </q-card-section>
         <q-card-section>
             <div class="row">
@@ -77,8 +79,7 @@
                 <div class="col-4">Molienda</div>
                 <div class="col-4"><q-input dense outlined type="number" v-model="molienda"  /></div>
             </div>
-            <div><b>VALOR PAGABLE:</b>{{totalPagable}}</div>
-            <div><b>VALOR BRUTO:</b>{{totalBruto}}</div>
+
         </q-card-section>
         </q-page>
 </template>
@@ -179,14 +180,12 @@ import { computed } from 'vue'
         calculoValoracion(){
             this.buscarQuin(this.lote.fecha)
             this.calculoAnticipo()
-            this.actual=0
-            this.valAg=this.plata * 100 / 31.1035
+            this.valAg=(this.plata * 100 / 31.1035).toFixed(2)
             this.valPb=this.plomo
             this.valZn=this.zinc
             this.calculoParcialAg
             this.calculoParcialPb
             this.calculoParcialZn
-
             this.regaliaAg= (this.valAg * this.calculoPesoNeto / 1000) * this.quincena.plata
             this.regaliaPb= this.calculoPesoNeto * this.plomo * 2.2046223 * this.quincena.plomo
             this.regaliaZn= this.calculoPesoNeto * this.zinc * 2.2046223 * this.quincena.zinc
@@ -197,18 +196,29 @@ import { computed } from 'vue'
 
         },
         calculoParcialAg(){
-            //if(this.pagAg<=0) this.pagAg=100
-            this.parAg = ((this.valAg - this.decAg) * (this.pagAg<=0||this.pagAg>100?100:this.pagAg ) / 100).toFixed(2)
+            let cal=1
+            if(this.pagAg>0 && this.pagAg<=100) cal=this.pagAg/100
+            this.parAg = ((this.valAg - this.decAg)*  cal * this.quincena.plata).toFixed(2)
+            console.log(this.valAg)
+            console.log(this.quincena.plata)
+            console.log(this.pagAg)
+            console.log( this.parAg)
+
         },
         calculoParcialZn(){
-            //if(this.pagZn<=0) this.pagZn=100
-            if(parseFloat(this.regaliaZn)>0) this.actual = this.regaliaZn
-            this.parZn = ((this.valZn - this.decZn) * (this.pagZn<=0||this.pagZn>100?100:this.pagZn ) / 100).toFixed(2)
+            let cal=1
+            if(this.valZn>0)
+            this.actual=this.quincena.zinc
+            if(this.pagZn>0 && this.pagZn<=100) cal=this.pagZn/100
+            this.parZn = ((this.valZn - this.decZn) * this.quincena.zinc * cal/100).toFixed(2)
         },
         calculoParcialPb(){
             //if(this.pagPb<=0) this.pagPb=100
-            if(parseFloat(this.regaliaPb)>0) this.actual = this.regaliaPb
-            this.parPb = ((this. valPb - this.decPb) * (this.pagPb<=0||this.pagPb>100?100:this.pagPb )/ 100).toFixed(2)
+            if(this.valPb>0)
+            this.actual = this.quincena.plomo
+                        let cal=1
+            if(this.pagPb>0 && this.pagPb<=100) cal=this.pagPb/100
+            this.parPb = ((this. valPb - this.decPb) * this.quincena.plata * cal/100).toFixed(2)
         }
     },
     computed:{
