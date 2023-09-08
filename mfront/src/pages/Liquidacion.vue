@@ -57,7 +57,8 @@
             <div class="col-4"><q-input dense outlined v-model="penalidad" label="Penalidad" /></div>
             <div class="col-4"><b>DESCUENTO BASE</b> {{calculoDesc}} </div>
         </div>     
-        <div><b>VALOR PAGABLE:</b>{{totalPagable}}</div>
+        <div><b>TOTAL DEDUCION:</b>{{totaldeduccio}}</div>
+        <div><b>VALOR :</b>{{calculoValor}}</div>
         <div><b>VALOR BRUTO:</b>{{totalBruto}}</div>   
         </q-card-section>
         <q-card-section>
@@ -223,7 +224,8 @@ import { computed } from 'vue'
     },
     computed:{
         calculoPesoNeto(){
-            return this.lote.peso * (100 -  this.humedad)/100 - (this.lote.saco/2) - (this.lote.peso * this.tara/100)
+            return ((this.lote.peso * (100 -  this.humedad)/100) - (this.lote.peso * (100 -  this.humedad)/100)  * this.tara/100)
+            //return this.lote.peso * (100 -  this.humedad)/100 - (this.lote.saco/2) - (this.lote.peso * this.tara/100)
        },
         totalParcial() {
             return parseFloat(this.parAg) + parseFloat(this.parPb) + parseFloat(this.parZn)
@@ -241,7 +243,13 @@ import { computed } from 'vue'
                 return parseFloat(this.regaliaAg) + parseFloat(this.refinacion)
             else
             return parseFloat(this.regaliaAg)
-        }, 
+        },
+        totaldeduccio(){
+            return (parseFloat(this.maquila) + parseFloat(this.calculoDesc)).toFixed(2)
+        },
+        calculoValor(){
+            return parseFloat(this.totalParcial) - parseFloat(this.totaldeduccio)
+        },
         totalDescuento(){
             //if(isNaN(this.maquila)) this.maquila=0
             return parseFloat(this.maquila) + parseFloat(this.calculoRefinacion) + parseFloat(this.calculoDesc)
@@ -250,7 +258,8 @@ import { computed } from 'vue'
             return parseFloat(this.totalParcial) - parseFloat(this.totalDescuento)
         },
         totalBruto(){
-            return parseFloat(this.totalPagable) * parseFloat(this.calculoPesoNeto) / 1000
+            //return parseFloat(this.totalPagable) * parseFloat(this.calculoPesoNeto) / 1000
+            return (parseFloat(this.calculoPesoNeto) * parseFloat(this.calculoValor)/1000).toFixed(2)
         },
         totalTransporte(){
             return parseFloat(this.anticipo) + parseFloat(this.transporte)
