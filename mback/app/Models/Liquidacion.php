@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lote extends Model
+class Liquidacion extends Model
 {
     use HasFactory;
     protected $fillable=[
@@ -26,13 +26,17 @@ class Lote extends Model
          return $this->belongsTo(Cliente::class);
      }
      public function cooperativa(){
-         return $this->belongsTo(Cooperativa::class)->with('descuentos');
+         return $this->belongsTo(Cooperativa::class);
      }
      public function ley(){
-        return $this->hasOne(Ley::class);
+        return $this->belongsTo(Ley::class,'id');
     }
-    public function anticipo(){
-        return $this->hasMany(Anticipo::class);
+
+    public function diaria(){
+        return $this->hasOne(Diaria::class);
+    }
+    public function quincena(){
+        return $this->hasOne(Quincena::class);
     }
 
 }

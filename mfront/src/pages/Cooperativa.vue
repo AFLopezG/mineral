@@ -7,7 +7,7 @@
            :rows-per-page-options="[0]"
   >
   <template v-slot:top-right>
-      <q-btn @click="cooperativaDialog=true" color="green" icon="add_circle_outline" label="Registrar" no-caps />
+      <q-btn @click="cooperativaDialog=true; modicoop=true" color="green" icon="add_circle_outline" label="Registrar" no-caps />
         <q-input outlined dense debounce="300" v-model="cooperativaFilter" placeholder="Buscar">
           <template v-slot:append>
             <q-icon name="search" />
@@ -19,7 +19,7 @@
     <q-td :props="props" auto-width>
       <q-btn-dropdown color="red" label="OPCION">
         <q-list>
-          <q-item clickable v-close-popup @click="cooperativaEdit (props.row)">
+          <q-item clickable v-close-popup @click="cooperativaEdit (props.row)" >
             <q-item-section>
               <q-item-label>
                   Editar
@@ -64,14 +64,14 @@
       <q-input dense outlined v-model="cooperativ.nim" label="NIM Cooperativa"></q-input>
       <q-input dense outlined v-model="cooperativ.nit" label="NIT Cooperativa"></q-input>
       <q-input dense outlined v-model="cooperativ.celular" label="Celular Cooperativa"></q-input>
-<!--      <q-input dense outlined v-model="cooperativ.estado" label="Estado Cooperativa"></q-input>-->
       <q-select dense outlined v-model="cooperativ.estado" :options="estados" label="Estado"></q-select>
-
       <q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" ></q-btn>
     </q-form>
   </q-card-section>
   </q-card>
 </q-dialog>
+
+
 
 <q-dialog v-model="descuentoDialog">
   <q-card>
@@ -106,7 +106,7 @@
           <th class="text-left">NIT</th>
           <th class="text-left">CELULAR</th>
           <th class="text-left"> ESTADO</th>
-          <th class="text-left">FECHA</th>
+          
           <th class="text-left">OPCIONES</th>
         </tr>
       </thead>
@@ -120,7 +120,7 @@
             <th class="text-left">{{c.nit}}</th>
             <th class="text-left">{{c.celular}}</th>
             <th class="text-left">{{c.estado}}</th>
-            <th class="text-left">{{c.fecha}}</th>
+            
             <th class="text-left"></th>
         </tr>
     </thead>
@@ -153,14 +153,16 @@ import {date} from 'quasar'
                 estados:['ACTIVO', 'PASIVO'],
                 cooperativaFilter:'',
                 cooperativaDialog:false,
+                modicoop:false,
                 cooperativa:[],
                 cooperativ:{},
+                cooperativ2:{},
                 coop:{},
                 cooperativaColum:[
                 {name:'opcion', label:'Opcion', field:'opcion', sortable:true},
-                //{name:'id', label:'Numero', field:'id', sortable:true},
+                {name:'id', label:'Numero', field:'id', sortable:true},
                 {name:'nombre', label:'Nombre', field:'nombre', sortable:true},
-                //{name:'direccion', label:'Direccion', field:'direccion', sortable:true},
+                {name:'direccion', label:'Direccion', field:'direccion', sortable:true},
                 {name:'representante', label:'Representante', field:'representante', sortable:true},
                 {name:'nim', label:'NIM', field:'nim', sortable:true},
                 {name:'nit', label:'NIT', field:'nit', sortable:true},
@@ -212,19 +214,34 @@ import {date} from 'quasar'
            })
             },
       cooperativaCreate(){
-
-        if(this.cooperativ.id=='' || this.cooperativ.id==undefined){
+        //this.$q.loading.show()
+        if (this.modicoop)
+        //{
+          //if(this.cooperativ.id=='' || this.cooperativ.id==undefined)
+          {
       this.$api.post('cooperativa' , this.cooperativ).then((response)=>{
-        this.cooperativaDialog=false;
         this.cooperativaAll();
-           })
-          }
-           else{
-            this.$api.put('cooperativa/'+this.cooperativ.id , this.cooperativ).then((response)=>{
         this.cooperativaDialog=false;
-        this.cooperativaAll();
-           })
+        this.cooperativ={};
+        this.cooperativaDialog=false;
+            })
            }
+          //}
+          else
+           {
+            this.$api.put('cooperativa/'+this.cooperativ.id , this.cooperativ).then((response)=>{
+            //this.cooperativaAll();
+            this.cooperativaDialog=false;
+            this.cooperativ={};
+            this.modicoop=true;
+            
+            
+                  
+           })}
+          
+
+        //if(this.cooperativ.id=='' || this.cooperativ.id==undefined)
+         //  else
         },
       cooperativaDelete(row) {
         this.$q.dialog({
@@ -240,9 +257,11 @@ import {date} from 'quasar'
       },
       cooperativaEdit(row){
         this.cooperativ=row;
+        this.modicoop=false;
         this.cooperativaDialog=true;
+       
       }
 
-        }
+      }
   }
   </script>

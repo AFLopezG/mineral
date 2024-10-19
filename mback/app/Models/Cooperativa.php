@@ -25,7 +25,7 @@ class Cooperativa extends Model
     public function cliente(){
         return $this->hasMany(Cliente::class);
     }
-    public function descuento(){
+    public function descuentos(){
         return $this->hasMany(Descuento::class);
     }
 }

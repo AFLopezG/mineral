@@ -1,10 +1,12 @@
 import IndexPage from "pages/IndexPage";
 import Cooperativa from "pages/Cooperativa";
 import Cliente from "pages/Cliente";
-import Diario from "pages/Diario";
+import Diaria from "pages/Diaria";
 import Lotes from "pages/Lotes";
-import Anticipo from "pages/Anticipo.vue";
-import Liquidacion from "pages/Liquidacion.vue";
+import Ley from "pages/Leys";
+import Anticipo from "pages/Anticipo";
+import Liquidacion from "pages/Liquidacion";
+import Termino from "pages/Terminos";
 //import Registro from "pages/Registro";
 
 const routes = [
@@ -15,10 +17,12 @@ const routes = [
       { path: '', component: IndexPage },
       { path: 'cooperativa', component: Cooperativa },
       { path: 'cliente', component: Cliente },
-      { path: 'diario', component: Diario },
+      { path: 'diaria', component: Diaria },
       { path: 'lote', component: Lotes },
       { path: 'anticipo', component: Anticipo },
-      { path: 'liquidacion', component: Liquidacion }
+      { path: 'ley', component: Ley },
+      { path: 'liquidacion', component: Liquidacion },
+      { path: 'termino', component: Termino },
       //{ path: 'registro', component: Registro },
     ]
   },

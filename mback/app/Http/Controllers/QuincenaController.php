@@ -58,10 +58,6 @@ class QuincenaController extends Controller
             $quincena->plomo=$request->plomo;
             $quincena->zinc=$request->zinc;
             $quincena->estano=$request->estano;
-            $quincena->alplata=$request->alplata;
-            $quincena->alplomo=$request->alplomo;
-            $quincena->alzinc=$request->alzinc;
-            $quincena->alestano=$request->alestano;
             $quincena->explata=$request->explata;
             $quincena->explomo=$request->explomo;
             $quincena->exzinc=$request->exzinc;
@@ -107,10 +103,6 @@ class QuincenaController extends Controller
         $quincena->plomo=$request->plomo;
         $quincena->zinc=$request->zinc;
         $quincena->estano=$request->estano;
-        $quincena->alplata=$request->alplata;
-        $quincena->alplomo=$request->alplomo;
-        $quincena->alzinc=$request->alzinc;
-        $quincena->alestano=$request->alestano;
         $quincena->explata=$request->explata;
         $quincena->explomo=$request->explomo;
         $quincena->exzinc=$request->exzinc;

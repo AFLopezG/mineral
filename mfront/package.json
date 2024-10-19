@@ -1,8 +1,8 @@
 {
   "name": "mfront",
   "version": "0.0.1",
-  "description": "Empresa minera la cordillera del sur",
-  "productName": "Empresa minera la cordillera del sur",
+  "description": "Empresa minera MINASTRI",
+  "productName": "Empresa minera MINASTRI",
   "author": "AFLopezG <lopez.gutierrez.a07@gmail.com>",
   "private": true,
   "scripts": {

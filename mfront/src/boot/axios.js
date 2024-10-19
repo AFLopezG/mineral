@@ -17,7 +17,7 @@ export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios
   app.config.globalProperties.$alert = Alert
   app.config.globalProperties.$pdf = Pdf
-  app.config.globalProperties.$minerales = ['Plata','Zinc','Plomo']
+  app.config.globalProperties.$minerales = ['Plata','Zinc-Plata','Plomo-Plata','Broza']
   app.config.globalProperties.$tipos = ['Concentrado','Broza']
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
   //       so you won't necessarily have to import axios in each vue file

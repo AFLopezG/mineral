@@ -37,7 +37,7 @@
         <template v-slot:body-cell-mineral="props">
           <q-td :props="props" >
             <q-chip :label="props.row.mineral"
-                    :color="props.row.mineral=='Plata'?'grey-8':props.row.mineral=='Zinc'?'blue-8':props.row.mineral=='Plomo'?'green-8':''"
+                    :color="props.row.mineral=='Plata'?'grey-8':props.row.mineral=='Zinc-Plata'?'blue-8':props.row.mineral=='Plomo-Plata'?'green-5':props.row.mineral=='Broza'?'blue-2':''" 
                     text-color="white"
             />
           </q-td>
@@ -62,10 +62,14 @@
         <q-form @submit="loteCreate">
           <div class="row">
             <div class="col-12 col-md-3">
-              <q-select outlined v-model="lote.mineral" label="Mineral" :options="$minerales"></q-select>
+              <q-select outlined v-model="lote.mineral" label="Tipo Mineral" :options="$minerales"></q-select >
             </div>
-            <div class="col-12 col-md-3">
-              <q-select outlined v-model="lote.tipo" label="Tipo" :options="$tipos"></q-select>
+            <div   class="col-12 col-md-3" >
+              <!--q-select outlined v-model="lote.tipo" label="Clase Mineral" :options="$tipos"></q-select!-->
+             <td>Clase Mineral</td> 
+              <div>
+               {{(lote.mineral=='Broza'?this.lote.tipo='Broza':this.lote.tipo='Concentrado')}}
+              </div >
             </div>
             <div class="col-12 col-md-3">
               <q-input required outlined v-model="lote.peso" label="Peso" type="number" step="0.01"></q-input>
@@ -141,8 +145,13 @@
         loteAgregar(){
           this.loteDialog=true
           this.loteOption='create'
-          this.lote.mineral='Plata'
-          this.lote.tipo='Concentrado'
+          this.lote.mineral='Broza'
+          //if (lote.mineral='Broza') {
+            //this.lote.tipo='Broza'  
+          //} else {
+            //this.lote.tipo='Concentrado'  
+         // }
+          
           this.lote.fecha=date.formatDate(Date.now(),'YYYY-MM-DD')
         },
         filterFn (val, update) {

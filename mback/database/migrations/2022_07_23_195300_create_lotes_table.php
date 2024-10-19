@@ -26,7 +26,7 @@ return new class extends Migration
 ////            $table->string('estado')->default('EN CURSO');
 //
 ////            mostrar aparte
-//            //de nosotro nuestras leyes de empresa
+//            //de nosotro nuestras leys de empresa
 //            $table->string('codigolab')->nullable();
 //            $table->string('nombre')->nullable();
 //            $table->double('plata')->nullable()->default(0);
@@ -34,13 +34,13 @@ return new class extends Migration
 //            $table->double('zinc')->nullable()->default(0);
 //            $table->double('estano')->nullable()->default(0);
 //            $table->double('agua')->nullable()->default(0);
-//            //leyes del coperativista del cliente
+//            //leys del coperativista del cliente
 //            $table->double('clplata')->nullable();
 //            $table->double('clplomo')->nullable();
 //            $table->double('clzinc')->nullable();
 //            $table->double('clestano')->nullable();
 //            $table->double('clagua')->nullable();
-//            //leyes oficiales
+//            //leys oficiales
 //            $table->double('finplata')->nullable()->comment('(plata + clplata)/2');
 //            $table->double('finplomo')->nullable()->comment('(plomo + clplomo)/2');
 //            $table->double('finzinc')->nullable()->comment('(zinc + clzinc)/2');
@@ -54,6 +54,8 @@ return new class extends Migration
             $table->string('tipo')->nullable();
             $table->double("peso",11,2)->nullable();
             $table->integer("saco")->nullable();
+            $table->string('liquidado')->nullable();
+            $table->string('conjunto')->nullable();
             $table->unsignedBigInteger('cliente_id')->nullable();
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->unsignedBigInteger('cooperativa_id')->nullable();

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diaria;
 use App\Http\Requests\StoreDiariaRequest;
 use App\Http\Requests\UpdateDiariaRequest;
-
+use Illuminate\Http\Request;
 class DiariaController extends Controller
 {
     /**
@@ -16,8 +16,19 @@ class DiariaController extends Controller
     public function index()
     {
         //
-        return Diaria::orderBy('id','desc')->limit(30)->get();
+        return Diaria::orderBy('id','desc')->limit(10)->get();
     }
+
+    public function buscarDiaria(Request $request){
+        $timestamp = strtotime($request->fecha);
+        $dia= date("d", $timestamp);
+        $mes= date("m", $timestamp);
+        $an= date("Y", $timestamp);
+        //return Diaria::whereDate('fecha',$an.'-'.$mes.'-'.$dia)->first();
+        return Diaria::whereDate('fecha',$request->fecha)->first();
+        
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -98,4 +109,5 @@ class DiariaController extends Controller
     {
         //
     }
+   
 }

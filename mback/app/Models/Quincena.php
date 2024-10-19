@@ -13,10 +13,6 @@ class Quincena extends Model
         'plomo',
         'zinc',
         'estano',
-        'alplata',
-        'alplomo',
-        'alzinc',
-        'alestano',
         'explata',
         'explomo',
         'exzinc',
@@ -24,5 +20,8 @@ class Quincena extends Model
         'fecha'
      ];
      protected $hidden = ["created_at", "updated_at"];
+    // public function liquidacion(){
+      //  return $this->hasMany(Liquidacion::class);
+   // }
 
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('nit');
             $table->string('celular')->nullable();
             $table->string('estado')->default('ACTIVO');
-
+            //$table->string('Fecha');
             //$table->string('cliente')->nullable();
             //$table->unsignedBigInteger('cliente_id');
             //$table->foreign('cliente_id')->references('id')->on('clientes');

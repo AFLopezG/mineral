@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Models\Cooperativa;
 use App\Models\Cliente;
-use Illuminate\Http\Request;
 use App\Http\Requests;
 //use App\Http\Requests\CreateCooperativaRequest;
-//use App\Http\Requests\UpdateCooperativaRequest;
+use App\Http\Requests\UpdateCooperativaRequest;
 
 class CooperativaController extends Controller
 {
@@ -25,9 +24,18 @@ class CooperativaController extends Controller
         return response()->json($cooperativa, status:200);
         
     }
-    public function update(Request $request, Cooperativa $cooperativa)
+    public function update(UpdateCooperativaRequest $request, Cooperativa $cooperativa)
     {  
-        $cooperativa->update($request->all());
+        $cooperativa=Cooperativa::find($request->id);
+        $cooperativa->nombre=$request->nombre;
+        $cooperativa->direccion=$request->direccion;
+        $cooperativa->representante=$request->representante;
+        $cooperativa->nim=$request->nim;
+        $cooperativa->nit=$request->nit;
+        $cooperativa->celular=$request->celular;
+        $cooperativa->estado=$request->estado;
+        //$cooperativa->update($request->all());
+        $cooperativa->save();
         return response()->json($cooperativa, status:200);
     }
 

@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Comercializadora Minera la Cordillera del Sur
+          Empresa Minera MINASTRI
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>

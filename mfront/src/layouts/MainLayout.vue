@@ -3,8 +3,8 @@
   <q-layout view="lHh Lpr lff" >
       <q-header class="">
         <q-toolbar>
-<!--          <q-toolbar-title>EMPRESA MINERA LA CORDILLERA DEL SUR</q-toolbar-title>-->
-          <q-toolbar-title>Empresa minera la cordillera del sur</q-toolbar-title>
+<!--          <q-toolbar-title>EMPRESA MINERA MINASTRI</q-toolbar-title>-->
+          <q-toolbar-title>Empresa minera MINASTRI</q-toolbar-title>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         </q-toolbar>
       </q-header>
@@ -67,7 +67,7 @@
 <!--              </q-item-section>-->
 
 <!--              <q-item-section>-->
-<!--                Leyes-->
+<!--                Leys-->
 <!--              </q-item-section>-->
 <!--            </q-item>-->
 
@@ -149,20 +149,25 @@ export default {
           icon: "o_book",
           to: "/Lote",
         },
-        // {
-        //   title: "Leyes",
-        //   icon: "o_send",
-        //   to: "/Ley",
-        // },
+        {
+          title: "Leyes",
+          icon: "o_send",
+          to: "/Ley",
+         },
         {
           title: "Anticipos",
           icon: "o_credit_card",
           to: "/Anticipo",
         },
         {
-          title: "Diario/Quincenal",
+          title: "Diaria/Quincenal",
           icon: "o_money",
-          to: "/Diario",
+          to: "/Diaria",
+        },
+        {
+          title: "Terminos",
+          icon: "o_money",
+          to: "/Termino",
         },
         {
           title: "Liquidacion",

@@ -5,20 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Diaria extends Model
+class Ley extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'plata',
+        'lote_id',
         'plomo',
+        'plata',
         'zinc',
-        'estano',
-        'fecha'
+        'estaño',
+        'humedad'
      ];
      protected $hidden = ["created_at", "updated_at"];
 
-    // public function liquidacion(){
-      //  return $this->hasMany(Liquidacion::class);
-    //}
+     public function lote(){
+         return $this->belongsTo(Lote::class);
+     }
+     
 
 }

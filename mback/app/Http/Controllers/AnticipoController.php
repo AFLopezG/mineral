@@ -19,7 +19,7 @@ class AnticipoController extends Controller{
         return $anticipo->load(['lote']);
     }
     public function update(UpdateAnticipoRequest $request, Anticipo $anticipo){
-        $anticipo->update($request->validated());
+        $anticipo->update($request->all());
         return $anticipo;
     }
     public function destroy(Anticipo $anticipo){

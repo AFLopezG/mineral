@@ -94,23 +94,23 @@
         <q-input dense outlined v-model="quincena.fecha" label="FECHA" type="date"></q-input>
         <div class="row">
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.plata" label="PLATA"></q-input></div>
-            <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.alplata" label="AL PLATA"></q-input></div>
+            
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.explata" label="EX PLATA"></q-input></div>
         </div>
         
         <div class="row">
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.plomo" label="plomo"></q-input></div>
-            <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.alplomo" label="AL plomo"></q-input></div>
+            
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.explomo" label="EX plomo"></q-input></div>
         </div>
         <div class="row">
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.zinc" label="zinc"></q-input></div>
-            <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.alzinc" label="AL zinc"></q-input></div>
+            
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.exzinc" label="EX zinc"></q-input></div>
         </div>
         <div class="row">
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.estano" label="estano"></q-input></div>
-            <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.alestano" label="AL estano"></q-input></div>
+            
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena.exestano" label="EX estano"></q-input></div>
         </div>
         <q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" ></q-btn>
@@ -129,23 +129,23 @@
         <q-input dense outlined v-model="quincena2.fecha" label="FECHA" type="date"></q-input>
         <div class="row">
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.plata" label="PLATA"></q-input></div>
-            <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.alplata" label="AL PLATA"></q-input></div>
+            
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.explata" label="EX PLATA"></q-input></div>
         </div>
         
         <div class="row">
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.plomo" label="plomo"></q-input></div>
-            <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.alplomo" label="AL plomo"></q-input></div>
+            
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.explomo" label="EX plomo"></q-input></div>
         </div>
         <div class="row">
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.zinc" label="zinc"></q-input></div>
-            <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.alzinc" label="AL zinc"></q-input></div>
+            
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.exzinc" label="EX zinc"></q-input></div>
         </div>
         <div class="row">
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.estano" label="estano"></q-input></div>
-            <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.alestano" label="AL estano"></q-input></div>
+            
             <div class="col-4 q-pa-xs"><q-input dense outlined v-model="quincena2.exestano" label="EX estano"></q-input></div>
         </div>
         <q-btn type="submit" class="full-width" color="green" label="Guardar" icon="check" ></q-btn>
@@ -213,11 +213,7 @@
                   {name:'zinc', label:'zinc', field:'zinc', sortable:true},
                   {name:'estano', label:'estano', field:'estano', sortable:true},
 
-                  {name:'alplata', label:'alplata', field:'alplata', sortable:true},
-                  {name:'alplomo', label:'alplomo', field:'alplomo', sortable:true},
-                  {name:'alzinc', label:'alzinc', field:'alzinc', sortable:true},
-                  {name:'alestano', label:'alestano', field:'alestano', sortable:true},
-
+            
                   {name:'explata', label:'explata', field:'explata', sortable:true},
                   {name:'explomo', label:'explomo', field:'explomo', sortable:true},
                   {name:'exzinc', label:'exzinc', field:'exzinc', sortable:true},

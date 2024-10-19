@@ -164,9 +164,9 @@ module.exports = configure(function (ctx) {
 
 
       manifest: {
-        name: `Empresa minera la cordillera del sur`,
-        short_name: `Empresa minera la cordillera del sur`,
-        description: `Empresa minera la cordillera del sur`,
+        name: `Empresa minera MINASTRI`,
+        short_name: `Empresa minera MINASTRI`,
+        description: `Empresa minera MINASTRI`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
